@@ -2,10 +2,11 @@
 .idea/
 *.iml
 
-# Environment / secrets
-.env
-.env.*
-
 # OS
 .DS_Store
 Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
