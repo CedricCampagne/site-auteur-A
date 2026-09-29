@@ -1,6 +1,7 @@
 package com.cedriccampagne.siteauteur.books.mapper;
 
 import com.cedriccampagne.siteauteur.books.dto.BookCard;
+import com.cedriccampagne.siteauteur.books.dto.BookExcerpt;
 import com.cedriccampagne.siteauteur.books.dto.BookLatest;
 
 import com.cedriccampagne.siteauteur.books.entity.Book;
@@ -30,4 +31,11 @@ public class BookMapper {
         );
     }
 
+    public BookExcerpt toBookExcerpt(Book book){
+        return new BookExcerpt(
+                book.getId(),
+                book.getTitle(),
+                book.getExcerpt()
+        );
+    }
 }

@@ -1,0 +1,18 @@
+<app-hero-section 
+    (selectedBook)="handleHeroExcerpt($event)"
+/>
+@if (homeBooks(); as books) {
+  <app-last-book 
+  [book]="books.latestBook" 
+  (openExcerpt)="handleExcerpt($event)"
+  />
+}
+
+@if (selectedExcerpt(); as excerpt) {
+<app-book-excerpt-modal
+  [open]="isModalOpen()"
+  [title]="excerpt.title"
+  [text]="excerpt.excerpt"
+  (close)="closeModal()"
+/>
+}

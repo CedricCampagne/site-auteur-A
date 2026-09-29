@@ -1,0 +1,65 @@
+@if (book(); as latestBook) {
+  <section
+    class="items-center mt-12 pb-8 border-b flex flex-col gap-4 text-center md:text-start md:items-start"
+  >
+    <h2 class="text-title text-2xl mb-2">
+      Dernier livre publié
+    </h2>
+
+    <div class="gap-4 flex flex-col items-center md:flex md:flex-row md:items-center">
+      <div class="relative inline-block">
+        <img
+          [src]="latestBook.coverUrl"
+          alt="Couverture du livre"
+          class="block sm:w-48 sm:min-w-48 h-auto sm:shrink-0 opacity-100"
+        />
+
+        <span
+          class="absolute inset-0 flex items-center justify-center text-accent2 text-center text-lg font-semibold p-2"
+        >
+          image non contractuelle en cours d’édition
+        </span>
+      </div>
+
+      <div class="flex flex-col items-center gap-2 mt-8 md:items-start">
+        <div class="flex flex-col gap-4 sm:flex sm:flex-row sm:items-center">
+          <h2 class="text-title text-2xl mb-2">
+            {{ latestBook.title }}
+            <span class="text-accent1">
+              est en cours d'édition
+            </span>
+          </h2>
+
+          <span>
+            {{ latestBook.publishedAt }}
+          </span>
+        </div>
+
+        <p>
+          {{ latestBook.summary }}
+        </p>
+
+        <div
+          class="flex flex-col items-center gap-2 mt-8 sm:flex sm:flex-row sm:items-start"
+        >
+          <button
+            type="button"
+            class="text-accent1 border-2 border-accent1 bg-bg-main hover:text-white hover:bg-accent1 transition-all duration-500"
+            (click)="openExcerpt.emit(latestBook)"
+          >
+            Lire un extrait
+          </button>
+
+          <button
+            type="button"
+            class="text-accent2 border-2 border-accent2 bg-bg-main hover:text-white hover:bg-accent2 transition-all duration-500"
+          >
+            Voir la fiche complète
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+} @else {
+  <p>Aucun livre trouvé.</p>
+}

@@ -1,0 +1,38 @@
+@if (open()) {
+  <!-- Overlay : un clic demande la fermeture du modal -->
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-40">
+    <button
+      type="button"
+      class="absolute inset-0 w-full h-full"
+      (click)="close.emit()"
+      aria-label="Fermer le modal"
+    ></button>
+  </div>
+
+  <div
+    class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+           bg-bg-main p-6 rounded shadow-lg z-50 w-11/12 max-w-md
+           flex flex-col gap-4"
+  >
+    <button
+      type="button"
+      class="absolute top-2 right-2 text-xl"
+      (click)="close.emit()"
+      aria-label="Fermer le modal"
+    >
+      X
+    </button>
+
+    <h2 class="border-b border-accent1 text-center pb-2">
+      Extrait du livre : {{ title() }}
+    </h2>
+
+    <p>
+      {{
+        text().length > maxLength
+          ? text().slice(0, maxLength) + '...'
+          : text()
+      }}
+    </p>
+  </div>
+}
