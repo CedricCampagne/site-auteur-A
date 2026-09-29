@@ -1,0 +1,21 @@
+package com.cedriccampagne.siteauteur.books.controller;
+
+import com.cedriccampagne.siteauteur.books.dto.HomeBooksResponse;
+import com.cedriccampagne.siteauteur.books.service.BookService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/books")
+public class BookController {
+    private final BookService bookService;
+
+    @GetMapping
+    public HomeBooksResponse getActiveBooks(){
+        return bookService.getActiveBooks();
+    }
+
+}
