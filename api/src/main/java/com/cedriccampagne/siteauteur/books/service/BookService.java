@@ -47,4 +47,11 @@ public class BookService {
                 .map(bookMapper::toBookListCard)
                 .toList();
     }
+
+    public BookDetails getActiveBookDetails(Long id){
+        Book book = bookRepository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(()-> new RuntimeException("le livre n'existe pas"));
+
+        return bookMapper.toBookDetails(book);
+    }
 }
