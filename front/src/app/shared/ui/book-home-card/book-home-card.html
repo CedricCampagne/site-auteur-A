@@ -1,0 +1,29 @@
+@if (book(); as book) {
+
+    <article
+      class="flex flex-col gap-4 justify-between items-center bg-white pb-4 shadow-lg shadow-accent2"
+    >
+      <div class="relative">
+        <img
+          [src]="book.coverUrl"
+          [alt]="'Couverture du livre ' + book.title"
+          class="w-full sm:h-full sm:object-contain md:h-70 md:object-cover"
+        />
+      </div>
+    
+      <h2 class="text-center">
+        {{ book.title }}
+      </h2>
+    
+      <p class="text-center text-sm">
+        {{ book.publishedAt }}
+      </p>
+    
+      <button
+        type="button"
+        class="border-2 text-accent1 border-accent1 hover:text-white hover:bg-accent1 transition-all duration-500"
+      >
+        Voir le livre
+      </button>
+    </article>
+}

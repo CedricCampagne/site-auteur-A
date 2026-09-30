@@ -3,5 +3,5 @@ import { BookLatest } from "./BookLatest";
 
 export interface HomeBooksResponse {
     latestBook: BookLatest;
-    otherBooks: BookCard;
+    otherBooks: BookCard[];
 }

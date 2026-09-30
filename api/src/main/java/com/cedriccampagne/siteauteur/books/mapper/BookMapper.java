@@ -18,7 +18,8 @@ public class BookMapper {
                 book.getTitle(),
                 book.getPublisher(),
                 book.getSummary(),
-                book.getExcerpt()
+                book.getExcerpt(),
+                book.getPublishedAt()
         );
     }
 

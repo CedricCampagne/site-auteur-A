@@ -9,24 +9,36 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 import { BookLatest } from '../books/models/BookLatest';
 import { BookExcerpt } from '../books/models/bookExcerpt';
+import { BookHomeCard } from '../shared/ui/book-home-card/book-home-card';
+import { ChronicleService } from '../chronicles/services/chronicle.service';
+import { ChronicleHomeCard } from '../shared/ui/chronicle-home-card/chronicle-home-card';
+import { About } from './about/about';
+import { UiMessages } from '../shared/ui/ui-messages/ui-messages';
 
 @Component({
   selector: 'app-home',
-  imports: [HeroSection, LastBook, BookExcerptModal],
+  imports: [HeroSection, LastBook, BookExcerptModal, BookHomeCard, ChronicleHomeCard, About, UiMessages],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
 
   private bookService = inject(BookService);
+  private chronicleService = inject(ChronicleService);
 
   homeBooks = toSignal(
     this.bookService.getHomeBooks(),
     { initialValue: null }
   );
 
-  isModalOpen = signal(false);
+  books = this.homeBooks()?.otherBooks;
 
+  homeChronicles = toSignal(
+    this.chronicleService.getHomeChronicles(),
+    { initialValue: []}
+  );
+
+  isModalOpen = signal(false);
   selectedExcerpt = signal<BookExcerpt | null>(null);
 
   handleExcerpt(book: BookLatest) {
