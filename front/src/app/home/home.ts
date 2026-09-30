@@ -17,7 +17,7 @@ import { UiMessages } from '../shared/ui/ui-messages/ui-messages';
 
 @Component({
   selector: 'app-home',
-  imports: [HeroSection, LastBook, BookExcerptModal, BookHomeCard, ChronicleHomeCard, About, UiMessages],
+  imports: [HeroSection, LastBook, BookExcerptModal, BookHomeCard, ChronicleHomeCard, About],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

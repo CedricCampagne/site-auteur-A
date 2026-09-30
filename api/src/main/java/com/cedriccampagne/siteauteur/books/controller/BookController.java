@@ -27,6 +27,6 @@ public class BookController {
         return bookService.getActiveBookExcerpts();
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<BookListCard> gatactiveList(){return  bookService.getActiveBooksList();}
 }
