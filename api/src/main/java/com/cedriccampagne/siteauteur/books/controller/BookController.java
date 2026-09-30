@@ -1,6 +1,7 @@
 package com.cedriccampagne.siteauteur.books.controller;
 
 import com.cedriccampagne.siteauteur.books.dto.BookExcerpt;
+import com.cedriccampagne.siteauteur.books.dto.BookListCard;
 import com.cedriccampagne.siteauteur.books.dto.HomeBooksResponse;
 import com.cedriccampagne.siteauteur.books.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +26,7 @@ public class BookController {
     public List<BookExcerpt> getActiveExcerpts(){
         return bookService.getActiveBookExcerpts();
     }
+
+    @GetMapping("list")
+    public List<BookListCard> gatactiveList(){return  bookService.getActiveBooksList();}
 }

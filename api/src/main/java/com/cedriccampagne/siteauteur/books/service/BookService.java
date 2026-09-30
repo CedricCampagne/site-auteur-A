@@ -1,9 +1,6 @@
 package com.cedriccampagne.siteauteur.books.service;
 
-import com.cedriccampagne.siteauteur.books.dto.BookCard;
-import com.cedriccampagne.siteauteur.books.dto.BookExcerpt;
-import com.cedriccampagne.siteauteur.books.dto.BookLatest;
-import com.cedriccampagne.siteauteur.books.dto.HomeBooksResponse;
+import com.cedriccampagne.siteauteur.books.dto.*;
 import com.cedriccampagne.siteauteur.books.entity.Book;
 import com.cedriccampagne.siteauteur.books.mapper.BookMapper;
 import com.cedriccampagne.siteauteur.books.repository.BookRepository;
@@ -41,6 +38,13 @@ public class BookService {
         return bookRepository.findAllByIsActiveTrueOrderByPublishedAtDesc()
                 .stream()
                 .map(bookMapper::toBookExcerpt)
+                .toList();
+    }
+
+    public List<BookListCard> getActiveBooksList(){
+        return bookRepository.findAllByIsActiveTrueOrderByPublishedAtDesc()
+                .stream()
+                .map(bookMapper::toBookListCard)
                 .toList();
     }
 }

@@ -4,6 +4,7 @@ import com.cedriccampagne.siteauteur.books.dto.BookCard;
 import com.cedriccampagne.siteauteur.books.dto.BookExcerpt;
 import com.cedriccampagne.siteauteur.books.dto.BookLatest;
 
+import com.cedriccampagne.siteauteur.books.dto.BookListCard;
 import com.cedriccampagne.siteauteur.books.entity.Book;
 
 import org.springframework.stereotype.Component;
@@ -37,6 +38,16 @@ public class BookMapper {
                 book.getId(),
                 book.getTitle(),
                 book.getExcerpt()
+        );
+    }
+
+    public BookListCard toBookListCard(Book book) {
+        return new BookListCard(
+                book.getId(),
+                book.getCoverUrl(),
+                book.getTitle(),
+                book.getExcerpt(),
+                book.getPublishedAt()
         );
     }
 }
