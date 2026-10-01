@@ -2,8 +2,10 @@ package com.cedriccampagne.siteauteur.books.service;
 
 import com.cedriccampagne.siteauteur.books.dto.*;
 import com.cedriccampagne.siteauteur.books.entity.Book;
+import com.cedriccampagne.siteauteur.books.exception.BookNotFoundException;
 import com.cedriccampagne.siteauteur.books.mapper.BookMapper;
 import com.cedriccampagne.siteauteur.books.repository.BookRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,8 +52,9 @@ public class BookService {
 
     public BookDetails getActiveBookDetails(Long id){
         Book book = bookRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(()-> new RuntimeException("le livre n'existe pas"));
-
+                .orElseThrow(()->
+                        new BookNotFoundException("Le livre avec l'id " + id + " n'existe pas")
+                );
         return bookMapper.toBookDetails(book);
     }
 }
