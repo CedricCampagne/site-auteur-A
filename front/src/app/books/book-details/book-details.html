@@ -36,21 +36,21 @@
         <div
           class="flex flex-col items-center md:items-start lg:flex-row gap-4"
         >
-          @if (book.genre) {
-            <span class="bg-accent1 text-white p-2 rounded">
-              {{ book.genre }}
-            </span>
-          }
+        <app-book-tag
+          [text]="book.genre"
+          [className]="book.genre ? 'bg-accent1 text-white' : ''"
+        />
 
-          <span class="p-2 rounded">
-            {{ book.publishedAt | date:'dd/MM/yyyy'}}
-          </span>
+        <app-book-tag
+          [text]="(book.publishedAt | date:'dd/MM/yyyy')!"
+        />
 
-          @if (book.publisher) {
-            <span class="bg-accent2 text-white p-2 rounded">
-              {{ book.publisher }}
-            </span>
-          }
+        @if (book.publisher) {
+          <app-book-tag
+            [text]="book.publisher"
+            [className]="'bg-accent2 text-white'"
+          />
+        }         
         </div>
       </div>
     </div>

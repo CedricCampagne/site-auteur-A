@@ -5,11 +5,12 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { marked } from 'marked';
+import { BookTag } from '../book-tag/book-tag';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, BookTag],
   templateUrl: './book-details.html',
   styleUrl: './book-details.css',
 })
