@@ -1,9 +1,10 @@
-import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, viewChild, computed } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from '../services/books.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-book-details',
@@ -44,4 +45,24 @@ export class BookDetails {
       behavior: 'smooth',
     });
   }
+
+  summaryHtml = computed(() => {
+    const book = this.book();
+
+    if (!book) {
+      return '';
+    }
+
+    return marked.parse(book.summary, {breaks: true});
+  });
+  
+  excerptHtml = computed(() => {
+    const book = this.book();
+
+    if (!book) {
+      return '';
+    }
+    
+    return marked.parse(book.excerpt, {breaks: true});
+  });
 }
