@@ -1,7 +1,5 @@
 package com.cedriccampagne.siteauteur.books.dto;
 
-import jakarta.persistence.Column;
-
 import java.time.LocalDateTime;
 
 public record BookDetails(
