@@ -1,0 +1,36 @@
+<article
+  class="flex flex-col overflow-hidden bg-white shadow-lg shadow-accent2 h-112 w-3/4"
+>
+  <div class="relative basis-1/3 shrink-0">
+    <div class="absolute inset-0">
+      <img
+        [src]="chronicle().coverUrl"
+        [alt]="'Couverture de ' + chronicle().title"
+        class="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+
+  <div
+    class="basis-2/3 flex flex-col items-center justify-between p-4 overflow-hidden"
+  >
+    <h3 class="font-title text-lg line-clamp-2">
+      {{ chronicle().title }}
+    </h3>
+
+    <p class="text-accent1 line-clamp-2 text-center">
+      {{ chronicle().quote }}
+    </p>
+
+    <p class="text-sm text-text-soft line-clamp-2 text-center">
+      {{ chronicle().summary }}
+    </p>
+
+    <button
+      type="button"
+      class="text-sm border-2 bg-white text-accent2 hover:bg-accent2 hover:text-white transition-all duration-500"
+    >
+      Lire la chronique
+    </button>
+  </div>
+</article>

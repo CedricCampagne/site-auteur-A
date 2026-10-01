@@ -9,6 +9,7 @@ public class ChronicleMapper {
 
     public ChronicleCard toChronicleCard(Chronicle chronicle) {
         return  new ChronicleCard(
+                chronicle.getId(),
                 chronicle.getTitle(),
                 chronicle.getQuote(),
                 chronicle.getSummary(),

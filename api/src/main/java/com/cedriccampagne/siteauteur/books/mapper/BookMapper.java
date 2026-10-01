@@ -1,7 +1,6 @@
 package com.cedriccampagne.siteauteur.books.mapper;
 
-import com.cedriccampagne.siteauteur.books.dto.BookCard;
-import com.cedriccampagne.siteauteur.books.dto.BookLatest;
+import com.cedriccampagne.siteauteur.books.dto.*;
 
 import com.cedriccampagne.siteauteur.books.entity.Book;
 
@@ -15,9 +14,11 @@ public class BookMapper {
                 book.getId(),
                 book.getCoverUrl(),
                 book.getTitle(),
+                book.getSlug(),
                 book.getPublisher(),
                 book.getSummary(),
-                book.getExcerpt()
+                book.getExcerpt(),
+                book.getPublishedAt()
         );
     }
 
@@ -26,8 +27,42 @@ public class BookMapper {
                 book.getId(),
                 book.getCoverUrl(),
                 book.getTitle(),
+                book.getSlug(),
                 book.getPublishedAt()
         );
     }
 
+    public BookExcerpt toBookExcerpt(Book book){
+        return new BookExcerpt(
+                book.getId(),
+                book.getTitle(),
+                book.getExcerpt()
+        );
+    }
+
+    public BookListCard toBookListCard(Book book) {
+        return new BookListCard(
+                book.getId(),
+                book.getCoverUrl(),
+                book.getTitle(),
+                book.getSlug(),
+                book.getExcerpt(),
+                book.getPublishedAt()
+        );
+    }
+
+    public BookDetails toBookDetails(Book book){
+        return new BookDetails(
+                book.getId(),
+                book.getTitle(),
+                book.getSlug(),
+                book.getAuthor(),
+                book.getSummary(),
+                book.getExcerpt(),
+                book.getPublishedAt(),
+                book.getPublisher(),
+                book.getGenre(),
+                book.getCoverUrl()
+        );
+    }
 }

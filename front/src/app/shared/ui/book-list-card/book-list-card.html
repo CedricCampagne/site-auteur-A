@@ -1,0 +1,39 @@
+<section
+  class="bg-white shadow-lg shadow-accent2 rounded p-6 flex flex-col sm:flex-row gap-6"
+>
+  <div class="relative">
+    <div class="sm:max-h-100 sm:w-40 sm:h-56 overflow-hidden">
+      <img
+        [src]="book().coverUrl"
+        [alt]="'Couverture du livre ' + book().title"
+        class="w-full object-contain sm:object-cover rounded"
+      />
+    </div>
+  </div>
+
+  <div
+    class="flex flex-col justify-between items-center text-center sm:text-left sm:items-start"
+  >
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">
+        {{ book().title }}
+      </h2>
+
+      <p class="text-sm text-gray-700 line-clamp-5">
+        {{
+          book().excerpt.length > maxLength
+            ? book().excerpt.slice(0, maxLength) + '...'
+            : book().excerpt
+        }}
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="mt-4 border-2 text-accent1 border-accent1 hover:bg-accent1 hover:text-white transition-all duration-300 w-fit"
+      (click)="goToBook()"
+    >
+      Voir le livre
+    </button>
+  </div>
+</section>
