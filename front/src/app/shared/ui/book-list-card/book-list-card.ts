@@ -14,7 +14,7 @@ export class BookListCard {
   protected readonly maxLength = 700;
 
   goToBook() {
-    this.router.navigate(['/books', this.book().id]);
+    this.router.navigate(['/books', this.book().id, this.book().slug]);
   }
 
 }

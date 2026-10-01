@@ -3,6 +3,7 @@ import { inject, Injectable } from "@angular/core";
 import { BookExcerpt } from "../models/bookExcerpt";
 import { HomeBooksResponse } from "../models/HomeBooksResponse";
 import { BookListItem } from "../models/bookListItem";
+import { BookDetails } from "../models/bookDetails";
 
 @Injectable({providedIn:'root'})
 export class BookService {
@@ -20,5 +21,9 @@ export class BookService {
 
     getBooksList(){
         return this.http.get<BookListItem[]>(`${this.apiUrl}/list`);
+    }
+
+    getBookDetails(id:number | null){
+        return this.http.get<BookDetails>(`${this.apiUrl}/${id}`);
     }
 }

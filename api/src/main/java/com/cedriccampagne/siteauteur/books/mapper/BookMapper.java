@@ -14,6 +14,7 @@ public class BookMapper {
                 book.getId(),
                 book.getCoverUrl(),
                 book.getTitle(),
+                book.getSlug(),
                 book.getPublisher(),
                 book.getSummary(),
                 book.getExcerpt(),
@@ -26,6 +27,7 @@ public class BookMapper {
                 book.getId(),
                 book.getCoverUrl(),
                 book.getTitle(),
+                book.getSlug(), 
                 book.getPublishedAt()
         );
     }
@@ -43,6 +45,7 @@ public class BookMapper {
                 book.getId(),
                 book.getCoverUrl(),
                 book.getTitle(),
+                book.getSlug(),
                 book.getExcerpt(),
                 book.getPublishedAt()
         );

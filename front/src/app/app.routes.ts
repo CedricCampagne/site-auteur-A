@@ -11,7 +11,7 @@ export const routes: Routes = [
         loadComponent: () => import('./books/books-list/books-list').then(m=>m.BooksList)
     },
     {
-        path: "books/:id",
+        path: "books/:id/:slug",
         loadComponent: () => import('./books/book-details/book-details').then(m=>m.BookDetails)
     }
 ];

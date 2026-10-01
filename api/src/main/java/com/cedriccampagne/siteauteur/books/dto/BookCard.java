@@ -6,6 +6,7 @@ public record BookCard(
         Long id,
         String coverUrl,
         String title,
+        String slug,
         LocalDateTime publishedAt
 )
 {}

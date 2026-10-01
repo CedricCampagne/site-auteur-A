@@ -1,1 +1,104 @@
-<p>book-details works!</p>
+@if (book(); as book) {
+  <section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+
+    <!-- Informations principales -->
+    <div
+      class="flex flex-col items-center gap-24 md:flex-row md:gap-8 md:self-center"
+    >
+      <!-- Couverture -->
+      <div
+        class="sm:w-75 sm:h-112.5 overflow-hidden rounded-md shadow-lg shadow-accent2"
+      >
+        <div class="relative">
+          <img
+            [src]="book.coverUrl"
+            [alt]="book.title"
+            class="w-full h-full object-cover rounded-md"
+          />
+        </div>
+      </div>
+
+      <!-- Informations -->
+      <div
+        class="flex-2 flex flex-col items-center md:items-start gap-12"
+      >
+        <h2 class="text-center text-3xl md:text-start md:text-5xl">
+          {{ book.title }}
+        </h2>
+
+        <p class="text-2xl">
+          par
+          <span class="text-accent1 font-black">
+            {{ book.author }}
+          </span>
+        </p>
+
+        <div
+          class="flex flex-col items-center md:items-start lg:flex-row gap-4"
+        >
+          @if (book.genre) {
+            <span class="bg-accent1 text-white p-2 rounded">
+              {{ book.genre }}
+            </span>
+          }
+
+          <span class="p-2 rounded">
+            {{ book.publishedAt | date:'dd/MM/yyyy'}}
+          </span>
+
+          @if (book.publisher) {
+            <span class="bg-accent2 text-white p-2 rounded">
+              {{ book.publisher }}
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-center gap-2 mt-24">
+      <button
+        type="button"
+        (click)="selectTab('resume')"
+        [class]="activeTab() === 'resume'
+          ? 'p-2 text-xl sm:text-2xl border-b-2 cursor-pointer text-accent1 font-black border-accent1'
+          : 'p-2 text-xl sm:text-2xl border-b-2 cursor-pointer text-accent2 border-transparent'"
+      >
+        Résumé
+      </button>
+
+      <button
+        type="button"
+        (click)="selectTab('extrait')"
+        [class]="activeTab() === 'extrait'
+          ? 'p-2 text-xl sm:text-2xl border-b-2 cursor-pointer text-accent1 font-black border-accent1'
+          : 'p-2 text-xl sm:text-2xl border-b-2 cursor-pointer text-accent2 border-transparent'"
+      >
+        Extrait
+      </button>
+    </div>
+
+    <!-- Contenu -->
+    <div
+      #contentSection
+      class="text-content mt-8 px-4 py-4 border-t"
+    >
+      @if (activeTab() === 'resume') {
+        <p class="text-lg leading-7 mb-4">
+          {{ book.summary }}
+        </p>
+      }
+
+      @if (activeTab() === 'extrait') {
+        <p class="text-lg leading-7 mb-4">
+          {{ book.excerpt }}
+        </p>
+      }
+    </div>
+
+  </section>
+} @else {
+  <section>
+    Pas de livre trouvé.
+  </section>
+}

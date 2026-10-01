@@ -6,6 +6,7 @@ public record BookListCard(
         Long id,
         String coverUrl,
         String title,
+        String slug,
         String excerpt,
         LocalDateTime publishedAt
 ) {

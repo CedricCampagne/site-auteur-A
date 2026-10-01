@@ -6,6 +6,7 @@ public record BookLatest(
         Long id,
         String coverUrl,
         String title,
+        String slug,
         String publisher,
         String summary,
         String excerpt,
