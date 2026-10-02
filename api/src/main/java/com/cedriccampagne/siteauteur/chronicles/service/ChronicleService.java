@@ -1,10 +1,15 @@
 package com.cedriccampagne.siteauteur.chronicles.service;
 
 import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleCard;
+import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleDetails;
 import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleListCard;
+
 import com.cedriccampagne.siteauteur.chronicles.entity.Chronicle;
+
 import com.cedriccampagne.siteauteur.chronicles.mapper.ChronicleMapper;
+
 import com.cedriccampagne.siteauteur.chronicles.repository.ChronicleRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +36,12 @@ public class ChronicleService {
         List<Chronicle> chronicles = chronicleRepository.findAllByIsActiveTrueOrderByPublishedAtDesc();
 
         return  chronicles.stream().map(chronicleMapper::toChronicleListCard).toList();
+    }
+
+    public ChronicleDetails getActiveById(Long id){
+        Chronicle chronicle = chronicleRepository.findByIdAndIsActiveTrue(id)
+                .orElseThrow(()-> new RuntimeException("erreur"));
+
+        return chronicleMapper.toChronicleDetails(chronicle);
     }
 }

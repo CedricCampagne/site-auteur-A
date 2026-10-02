@@ -2,6 +2,7 @@ package com.cedriccampagne.siteauteur.exception;
 
 import com.cedriccampagne.siteauteur.books.exception.BookNotFoundException;
 
+import com.cedriccampagne.siteauteur.chronicles.exception.ChronicleNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -22,5 +23,16 @@ public class GlobalExceptionHandler {
         );
 
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ChronicleNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleChronicleNotFoundException(ChronicleNotFoundException exception) {
+        ErrorResponse error = new ErrorResponse(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
