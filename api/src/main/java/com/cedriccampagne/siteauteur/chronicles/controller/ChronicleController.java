@@ -1,6 +1,7 @@
 package com.cedriccampagne.siteauteur.chronicles.controller;
 
 import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleCard;
+import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleListCard;
 import com.cedriccampagne.siteauteur.chronicles.service.ChronicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,5 +20,10 @@ public class ChronicleController {
     @GetMapping("/latest")
     public List<ChronicleCard> getLatestActive(){
         return chronicleService.getLatestActiveChronicle();
+    }
+
+    @GetMapping("/list")
+    public List<ChronicleListCard> getAllActive(){
+        return chronicleService.getAllActiveChronicle();
     }
 }

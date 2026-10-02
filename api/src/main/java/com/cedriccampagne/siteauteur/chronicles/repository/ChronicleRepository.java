@@ -10,5 +10,5 @@ import java.util.List;
 public interface ChronicleRepository extends JpaRepository<Chronicle, Long> {
 
     List<Chronicle> findTop3ByIsActiveTrueOrderByPublishedAtDesc();
-
+    List<Chronicle> findAllByIsActiveTrueOrderByPublishedAtDesc();
 }

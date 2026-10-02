@@ -1,6 +1,7 @@
 package com.cedriccampagne.siteauteur.chronicles.service;
 
 import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleCard;
+import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleListCard;
 import com.cedriccampagne.siteauteur.chronicles.entity.Chronicle;
 import com.cedriccampagne.siteauteur.chronicles.mapper.ChronicleMapper;
 import com.cedriccampagne.siteauteur.chronicles.repository.ChronicleRepository;
@@ -24,5 +25,11 @@ public class ChronicleService {
         List<Chronicle> chronicles = chronicleRepository.findTop3ByIsActiveTrueOrderByPublishedAtDesc();
 
         return chronicles.stream().map(chronicleMapper::toChronicleCard).toList();
+    }
+
+    public  List<ChronicleListCard> getAllActiveChronicle(){
+        List<Chronicle> chronicles = chronicleRepository.findAllByIsActiveTrueOrderByPublishedAtDesc();
+
+        return  chronicles.stream().map(chronicleMapper::toChronicleListCard).toList();
     }
 }
