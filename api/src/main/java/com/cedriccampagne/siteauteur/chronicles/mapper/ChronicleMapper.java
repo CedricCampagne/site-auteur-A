@@ -21,6 +21,7 @@ public class ChronicleMapper {
     public ChronicleListCard toChronicleListCard(Chronicle chronicle) {
         return new ChronicleListCard(
                 chronicle.getId(),
+                chronicle.getCoverUrl(),
                 chronicle.getTitle(),
                 chronicle.getSlug(),
                 chronicle.getQuote(),

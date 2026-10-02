@@ -24,6 +24,14 @@ export const routes: Routes = [
     {
         path:"contact",
         loadComponent: () => import('./contact/contact').then(m => m.Contact)
+    },
+    {
+        path:"chronicles",
+        loadComponent: () => import('./chronicles/chronicle-list/chronicle-list').then(m => m.ChronicleList)
+    },
+    {
+        path:"chronicles/:id/:slug",
+        loadComponent: () => import('./chronicles/chronicle-details/chronicle-details').then(m => m.ChronicleDetails)
     }
 ];
 

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public record ChronicleListCard(
         Long id,
+        String coverUrl,
         String title,
         String slug,
         String quote,

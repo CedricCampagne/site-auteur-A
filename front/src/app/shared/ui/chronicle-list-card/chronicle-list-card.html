@@ -1,0 +1,41 @@
+<article
+  class="bg-white shadow-lg shadow-accent2 rounded p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6"
+>
+  <!-- Image -->
+  <div class="w-full sm:w-48 aspect-4/5 overflow-hidden rounded flex-none">
+    <img
+      [src]="chronicle().coverUrl"
+      [alt]="'Couverture de ' + chronicle().title"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <!-- Texte -->
+  <div class="flex flex-col justify-between">
+    <div>
+      <!-- Titre -->
+      <h2 class="text-2xl font-semibold mb-2">
+        {{ chronicle().title }} «{{ chronicle().quote }}»
+      </h2>
+
+      <!-- Date -->
+      <p class="text-sm text-accent1 font-bold mb-3">
+        {{ chronicle().publishedAt | date: 'dd/MM/yyyy' }}
+      </p>
+
+      <!-- Extrait -->
+      <p class="text-sm text-gray-700 line-clamp-3">
+        {{ chronicle().summary }}
+      </p>
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="button"
+      class="mt-4 border-2 border-accent2 hover:bg-accent2 hover:text-white transition-all duration-300 w-fit self-center sm:self-auto"
+      (click)="goToChronicle()"
+    >
+      Lire la chronique
+    </button>
+  </div>
+</article>
