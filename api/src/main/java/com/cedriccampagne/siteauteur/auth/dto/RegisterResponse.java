@@ -1,4 +1,4 @@
-package com.cedriccampagne.siteauteur.users.dto;
+package com.cedriccampagne.siteauteur.auth.dto;
 
 public record RegisterResponse(
         Long id,

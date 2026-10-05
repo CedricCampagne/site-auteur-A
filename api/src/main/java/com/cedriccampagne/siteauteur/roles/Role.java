@@ -1,4 +1,6 @@
 package com.cedriccampagne.siteauteur.roles;
 
-public class Role {
+public enum Role {
+    USER,
+    ADMIN
 }

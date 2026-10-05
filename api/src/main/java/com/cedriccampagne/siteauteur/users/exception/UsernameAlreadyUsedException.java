@@ -1,7 +1,7 @@
 package com.cedriccampagne.siteauteur.users.exception;
 
-public class UsernameAllreadyUsedException extends RuntimeException {
-    public UsernameAllreadyUsedException(String message) {
+public class UsernameAlreadyUsedException extends RuntimeException {
+    public UsernameAlreadyUsedException(String message) {
         super(message);
     }
 }

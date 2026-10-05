@@ -1,7 +1,7 @@
 package com.cedriccampagne.siteauteur.users.exception;
 
-public class EmailAllreadyUsedException extends RuntimeException {
-    public EmailAllreadyUsedException(String message) {
+public class EmailAlreadyUsedException extends RuntimeException {
+    public EmailAlreadyUsedException(String message) {
         super(message);
     }
 }
