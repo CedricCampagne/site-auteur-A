@@ -20,10 +20,16 @@ export class UiStore {
 
     showSuccess(message: string) {
         this.successMessage.set(message);
+        setTimeout(() => {
+            this.successMessage.set(null);
+        }, 3800);
     }
 
     showError(message: string) {
         this.errorMessage.set(message);
+        setTimeout(() => {
+            this.errorMessage.set(null);
+        }, 3800);
     }
 
     clearMessage(){

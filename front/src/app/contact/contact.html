@@ -1,0 +1,162 @@
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-4">
+    Me Contacter
+  </h2>
+
+  <h3 class="text-center mb-16">
+    Une question, une remarque ou une demande ? Écrivez-moi.
+  </h3>
+
+  <form
+    id="contactForm"
+    class="flex flex-col gap-6 items-center"
+    [formGroup]="contactForm"
+    (submit)="onSubmit()"
+  >
+    <!-- Nom -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+        <label for="name" class="font-title text-title mb-1 sm:mb-0">
+          Nom :
+        </label>
+
+        @if (contactForm.controls.name.touched) {
+          @if (contactForm.controls.name.hasError('required')) {
+            <span class="text-sm text-accent1">
+              Saisir votre nom
+            </span>
+          } @else if (contactForm.controls.name.hasError('minlength')) {
+            <span class="text-sm text-accent1">
+              Le nom doit contenir au moins 2 caractères
+            </span>
+          }
+        }
+      </div>
+
+        <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="border rounded-md p-3 focus:outline-none"
+            [class.border-accent1]="contactForm.controls.name.touched &&contactForm.controls.name.invalid"
+            [class.border-accent2]="!contactForm.controls.name.touched ||contactForm.controls.name.valid"
+            placeholder=""
+        />
+    </div>
+
+    <!-- Email -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+        <label for="email" class="font-title text-title mb-1 sm:mb-0">
+          Email :
+        </label>
+
+        @if (contactForm.controls.email.touched) {
+          @if (contactForm.controls.email.hasError('required')) {
+            <span class="text-sm text-accent1">
+              Saisir votre email
+            </span>
+          } @else if (contactForm.controls.email.hasError('email')) {
+            <span class="text-sm text-accent1">
+              Saisir une adresse email valide
+            </span>
+          }
+        }
+      </div>
+
+      <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="border rounded-md p-3 focus:outline-none"
+            [class.border-accent1]="contactForm.controls.email.touched &&contactForm.controls.email.invalid"
+            [class.border-accent2]="!contactForm.controls.email.touched ||contactForm.controls.email.valid"
+            placeholder=""
+      />
+    </div>
+
+    <!-- Sujet -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+        <label for="subject" class="font-title text-title mb-1 sm:mb-0">
+          Sujet :
+        </label>
+
+        @if (contactForm.controls.subject.touched) {
+          @if (contactForm.controls.subject.hasError('required')) {
+            <span class="text-sm text-accent1">
+              Saisir votre sujet
+            </span>
+          } @else if (contactForm.controls.subject.hasError('minlength')) {
+            <span class="text-sm text-accent1">
+              Le sujet doit contenir au moins 5 caractères
+            </span>
+          }
+        }
+      </div>
+
+      <input
+            type="text"
+            id="subject"
+            formControlName="subject"
+            class="border rounded-md p-3 focus:outline-none"
+            [class.border-accent1]="contactForm.controls.subject.touched &&contactForm.controls.subject.invalid"
+            [class.border-accent2]="!contactForm.controls.subject.touched ||contactForm.controls.subject.valid"
+            placeholder=""
+      />
+    </div>
+
+    <!-- Message -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+        <label for="message" class="font-title text-title mb-1 sm:mb-0">
+          Message :
+        </label>
+
+        @if (contactForm.controls.message.touched) {
+          @if (contactForm.controls.message.hasError('required')) {
+            <span class="text-sm text-accent1">
+              Saisir votre message 
+            </span> 
+          } @else if (contactForm.controls.message.hasError('minlength')) {
+            <span class="text-sm text-accent1">
+              Le message doit contenir au moins 10 caractères
+            </span>
+          } @else if (contactForm.controls.message.hasError('maxlength')) {
+            <span class="text-sm text-accent1">
+              Le message ne doit pas dépasser 2000 caractères
+            </span>
+          }
+        }
+      </div>
+
+      <textarea
+            rows="6"
+            id="message"
+            formControlName="message"
+            class="border rounded-md p-3 focus:outline-none"
+            [class.border-accent1]="contactForm.controls.message.touched &&contactForm.controls.message.invalid"
+            [class.border-accent2]="!contactForm.controls.message.touched ||contactForm.controls.message.valid"
+            placeholder=""
+      ></textarea>
+    </div>
+
+    <app-ui-messages />
+    <!-- Bouton -->
+    <button
+        type="submit"
+        class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+        [class.bg-accent1]="contactForm.invalid"
+        [class.bg-accent2]="contactForm.valid"
+        [disabled]="contactForm.invalid || ui.isLoading()"
+    >
+        @if (ui.isLoading()) {
+            Envoi en cours...
+        } @else if (contactForm.invalid) {
+            Formulaire incomplet
+        } @else {
+            Envoyer
+        }
+    </button>
+  </form>
+</section>
