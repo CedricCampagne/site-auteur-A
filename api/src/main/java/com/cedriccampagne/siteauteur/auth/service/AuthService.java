@@ -1,11 +1,8 @@
 package com.cedriccampagne.siteauteur.auth.service;
 
-import com.cedriccampagne.siteauteur.auth.dto.LoginRequest;
-import com.cedriccampagne.siteauteur.auth.dto.LoginResponse;
+import com.cedriccampagne.siteauteur.auth.dto.*;
 import com.cedriccampagne.siteauteur.auth.exception.InvalidCredentialsException;
 import com.cedriccampagne.siteauteur.roles.Role;
-import com.cedriccampagne.siteauteur.auth.dto.RegisterRequest;
-import com.cedriccampagne.siteauteur.auth.dto.RegisterResponse;
 import com.cedriccampagne.siteauteur.users.entity.User;
 import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.exception.UsernameAlreadyUsedException;
@@ -22,15 +19,18 @@ public class AuthService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public AuthService(
             UserRepository userRepository,
             UserMapper userMapper,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
     ) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public RegisterResponse register(RegisterRequest request){
@@ -55,7 +55,7 @@ public class AuthService {
         return userMapper.toRegisterResponse(saved);
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResult login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(()-> new InvalidCredentialsException("Identifiants invalides"));
@@ -65,7 +65,8 @@ public class AuthService {
         }
 
         LoginResponse loginResponse = userMapper.toLoginResponse(user);
+        String token = jwtService.generateToken(user);
 
-        return loginResponse;
+        return new LoginResult(loginResponse, token);
     }
 }
