@@ -2,6 +2,8 @@ package com.cedriccampagne.siteauteur.auth.service;
 
 import com.cedriccampagne.siteauteur.users.entity.User;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -52,4 +54,32 @@ public class JwtService {
                 .compact();
     }
 
+
+    public boolean isTokenValid(String token) {
+
+        try{
+            Jwts.parser()
+                    .verifyWith(getSignInKey())
+                    .build()
+                    .parseSignedClaims(token);
+
+            return true;
+        }catch ( JwtException | IllegalArgumentException exception){
+            return false;
+        }
+    }
+
+    public Claims extractClaims(String token) {
+
+        return Jwts.parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public String extractUsername(String token){
+        Claims claims = extractClaims(token);
+        return claims.getSubject();
+    }
 }
