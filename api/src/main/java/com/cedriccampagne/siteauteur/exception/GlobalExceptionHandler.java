@@ -5,6 +5,7 @@ import com.cedriccampagne.siteauteur.books.exception.BookNotFoundException;
 
 import com.cedriccampagne.siteauteur.chronicles.exception.ChronicleNotFoundException;
 import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
+import com.cedriccampagne.siteauteur.users.exception.UserNotFoundException;
 import com.cedriccampagne.siteauteur.users.exception.UsernameAlreadyUsedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,6 +89,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
             MethodArgumentNotValidException exception
@@ -112,6 +115,20 @@ public class GlobalExceptionHandler {
                         errors
                 );
 
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException (
+            UserNotFoundException exception
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
