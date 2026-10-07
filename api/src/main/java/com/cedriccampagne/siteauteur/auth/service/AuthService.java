@@ -8,30 +8,25 @@ import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.exception.UsernameAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.mapper.UserMapper;
 import com.cedriccampagne.siteauteur.users.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
-    public AuthService(
-            UserRepository userRepository,
-            UserMapper userMapper,
-            PasswordEncoder passwordEncoder,
-            JwtService jwtService
-    ) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
+    private final AuthenticationManager authenticationManager;
 
     public RegisterResponse register(RegisterRequest request){
 
@@ -57,16 +52,28 @@ public class AuthService {
 
     public LoginResult login(LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.email())
-                .orElseThrow(()-> new InvalidCredentialsException("Identifiants invalides"));
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        request.email(),
+                        request.password()
+                );
 
-        if(!passwordEncoder.matches(request.password(), user.getPassword())){
-            throw new InvalidCredentialsException("Identifiants invalides");
+        try {
+            authenticationManager.authenticate(authentication);
+        } catch (AuthenticationException exception) {
+            throw new InvalidCredentialsException(("Identifiants invalides"));
         }
 
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() ->
+                        new InvalidCredentialsException("Identifiants invalides")
+                );
+
         LoginResponse loginResponse = userMapper.toLoginResponse(user);
+
         String token = jwtService.generateToken(user);
 
         return new LoginResult(loginResponse, token);
+
     }
 }
