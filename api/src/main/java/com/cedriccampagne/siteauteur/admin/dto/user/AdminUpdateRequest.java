@@ -2,6 +2,7 @@ package com.cedriccampagne.siteauteur.admin.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record AdminUpdateRequest (
@@ -13,6 +14,9 @@ public record AdminUpdateRequest (
         @Email
         @NotBlank
         @Size(max = 50)
-        String email
+        String email,
+
+        @NotNull
+        Boolean isActive
 ) {
 }
