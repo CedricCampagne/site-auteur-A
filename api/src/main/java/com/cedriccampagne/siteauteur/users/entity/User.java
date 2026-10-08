@@ -1,13 +1,15 @@
 package com.cedriccampagne.siteauteur.users.entity;
 
 import com.cedriccampagne.siteauteur.comments.entity.Comment;
-import com.cedriccampagne.siteauteur.roles.entity.Role;
+import com.cedriccampagne.siteauteur.roles.Role;
 
 import jakarta.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -37,19 +39,17 @@ public class User {
     @Column(name ="is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "created_at",nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at",nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;

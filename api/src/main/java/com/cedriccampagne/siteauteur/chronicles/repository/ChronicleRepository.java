@@ -14,4 +14,5 @@ public interface ChronicleRepository extends JpaRepository<Chronicle, Long> {
     List<Chronicle> findTop3ByIsActiveTrueOrderByPublishedAtDesc();
     List<Chronicle> findAllByIsActiveTrueOrderByPublishedAtDesc();
     Optional<Chronicle> findByIdAndIsActiveTrue(Long id);
+    boolean existsBySlug(String slug);
 }
