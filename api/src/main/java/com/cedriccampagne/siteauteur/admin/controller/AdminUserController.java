@@ -1,6 +1,6 @@
 package com.cedriccampagne.siteauteur.admin.controller;
 
-import com.cedriccampagne.siteauteur.admin.dto.user.AdminUpdateRequest;
+import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserUpdateRequest;
 import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserResponse;
 import com.cedriccampagne.siteauteur.users.service.UserService;
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class AdminUserController {
     @PutMapping("/{id}")
     public AdminUserResponse update(
             @PathVariable Long id,
-            @RequestBody @Valid AdminUpdateRequest request
+            @RequestBody @Valid AdminUserUpdateRequest request
     ) {
         return userService.updateByAdmin(id, request);
     }

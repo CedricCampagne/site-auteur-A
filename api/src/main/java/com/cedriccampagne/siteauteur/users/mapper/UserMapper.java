@@ -1,8 +1,7 @@
 package com.cedriccampagne.siteauteur.users.mapper;
 
-import com.cedriccampagne.siteauteur.admin.dto.user.AdminUpdateRequest;
+import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserUpdateRequest;
 import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserResponse;
-import com.cedriccampagne.siteauteur.auth.dto.LoginRequest;
 import com.cedriccampagne.siteauteur.auth.dto.LoginResponse;
 import com.cedriccampagne.siteauteur.auth.dto.RegisterResponse;
 import com.cedriccampagne.siteauteur.users.entity.User;
@@ -51,7 +50,7 @@ public class UserMapper {
         );
     }
 
-    public void updateUserFromAdmin(AdminUpdateRequest request, User user){
+    public void updateUserFromAdmin(AdminUserUpdateRequest request, User user){
         user.setUsername(request.username());
         user.setEmail(request.email());
     }

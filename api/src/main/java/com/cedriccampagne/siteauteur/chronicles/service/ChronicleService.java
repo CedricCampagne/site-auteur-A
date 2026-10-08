@@ -127,4 +127,6 @@ public class ChronicleService {
 
         chronicleRepository.delete(chronicle);
     }
+
+
 }

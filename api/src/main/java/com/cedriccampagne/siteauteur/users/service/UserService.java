@@ -1,7 +1,7 @@
 package com.cedriccampagne.siteauteur.users.service;
 
 
-import com.cedriccampagne.siteauteur.admin.dto.user.AdminUpdateRequest;
+import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserUpdateRequest;
 import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserResponse;
 
 import com.cedriccampagne.siteauteur.users.entity.User;
@@ -37,7 +37,7 @@ public class UserService {
         return userMapper.toAdminResponse(user);
     }
 
-    public AdminUserResponse updateByAdmin(Long id, AdminUpdateRequest request) {
+    public AdminUserResponse updateByAdmin(Long id, AdminUserUpdateRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
