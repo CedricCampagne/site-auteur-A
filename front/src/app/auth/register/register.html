@@ -1,0 +1,176 @@
+
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-10">
+    Créer votre compte
+  </h2>
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-6 items-center"
+  >
+    <!-- Nom -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="username" class="font-title text-title mb-1">
+        Nom :
+      </label>
+
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        autocomplete="username"
+        placeholder=""
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="registerForm.controls.username.touched && registerForm.controls.username.invalid"
+        [class.border-accent2]="!registerForm.controls.username.touched || registerForm.controls.username.valid"
+      >
+
+      @if (
+        registerForm.controls.username.touched &&
+        registerForm.controls.username.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          Le nom est obligatoire.
+        </p>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="email" class="font-title text-title mb-1">
+        Email :
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        autocomplete="email"
+        placeholder=""
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="registerForm.controls.email.touched && registerForm.controls.email.invalid"
+        [class.border-accent2]="!registerForm.controls.email.touched || registerForm.controls.email.valid"
+      >
+
+      @if (
+        registerForm.controls.email.touched &&
+        registerForm.controls.email.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          L'email est obligatoire.
+        </p>
+      }
+
+      @if (
+        registerForm.controls.email.touched &&
+        registerForm.controls.email.hasError('email')
+      ) {
+        <p class="text-sm text-accent1">
+          Veuillez saisir une adresse email valide.
+        </p>
+      }
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="password" class="font-title text-title mb-1">
+        Mot de passe :
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        autocomplete="new-password"
+        placeholder=""
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="registerForm.controls.password.touched && registerForm.controls.password.invalid"
+        [class.border-accent2]="!registerForm.controls.password.touched || registerForm.controls.password.valid"
+      >
+
+      @if (
+        registerForm.controls.password.touched &&
+        registerForm.controls.password.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          Le mot de passe est obligatoire.
+        </p>
+      }
+
+      @if (
+        registerForm.controls.password.touched &&
+        registerForm.controls.password.hasError('minlength')
+      ) {
+        <p class="text-sm text-accent1">
+          Le mot de passe doit contenir au moins 12 caractères.
+        </p>
+      }
+
+      @if (
+        registerForm.controls.password.touched &&
+        registerForm.controls.password.hasError('maxlength')
+      ) {
+        <p class="text-sm text-accent1">
+          Le mot de passe ne doit pas dépasser 200 caractères.
+        </p>
+      }
+    </div>
+
+    <!-- Confirmation -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="confirmPassword" class="font-title text-title mb-1">
+        Confirmation :
+      </label>
+
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+        placeholder=""
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="registerForm.controls.confirmPassword.touched && (registerForm.controls.confirmPassword.invalid || registerForm.hasError('passwordsMismatch'))"
+        [class.border-accent2]="!registerForm.controls.confirmPassword.touched || (registerForm.controls.confirmPassword.valid && !registerForm.hasError('passwordsMismatch'))"
+      >
+
+      @if (
+        registerForm.controls.confirmPassword.touched &&
+        registerForm.controls.confirmPassword.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          La confirmation du mot de passe est obligatoire.
+        </p>
+      }
+
+      @if (
+        registerForm.controls.confirmPassword.touched &&
+        registerForm.controls.confirmPassword.value !== '' &&
+        registerForm.hasError('passwordsMismatch')
+      ) {
+        <p class="text-sm text-accent1">
+          Les mots de passe ne correspondent pas.
+        </p>
+      }
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="submit"
+      class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+      [class.bg-accent1]="registerForm.invalid"
+      [class.bg-accent2]="registerForm.valid"
+      [disabled]="registerForm.invalid || ui.isLoading()"
+    >
+      @if (ui.isLoading()) {
+        Inscription en cours...
+      } @else if (registerForm.invalid) {
+        Formulaire incomplet
+      } @else {
+        S'inscrire
+      }
+    </button>
+  </form>
+
+  <app-ui-messages />
+</section>

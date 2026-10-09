@@ -60,10 +60,18 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        .requestMatchers("/api/chronicles/latest").permitAll()
+                        .requestMatchers("/api/chronicles/list").permitAll()
+                        .requestMatchers("/api/chronicles").permitAll()
+
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         .requestMatchers("/api/chronicles/*").authenticated()
                         .requestMatchers("/api/chronicles/*/comments").authenticated()
+
                         .requestMatchers("/api/comments/**").authenticated()
                         .anyRequest().permitAll()
                 );

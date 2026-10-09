@@ -16,6 +16,9 @@ export class ChronicleListCard {
   chronicle = input.required<ChronicleListItem>();
 
   goToChronicle(){
-    this.router.navigate(["/chronicles/", this.chronicle().id, this.chronicle().slug])
+    this.router.navigate([
+      "/chronicles/",
+      this.chronicle().id, this.chronicle().slug
+    ])
   }
 }

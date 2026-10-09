@@ -10,4 +10,10 @@
       {{ message }}
     </p>
   }
+
+  @if (ui.isLoading()) {
+    <p class="bg-blue-600 text-white p-3 rounded shadow-lg">
+      Chargement...
+    </p>
+  }
 </div>

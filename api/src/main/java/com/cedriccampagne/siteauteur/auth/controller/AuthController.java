@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
@@ -54,5 +52,27 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(result.response());
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie
+                .from("access_token", "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        response.addHeader(
+                HttpHeaders.SET_COOKIE,
+                cookie.toString()
+        );
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public CurrentUserResponse me(Authentication authentication) {
+        return authService.getCurrentUser(authentication);
     }
 }
