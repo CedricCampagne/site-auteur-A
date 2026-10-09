@@ -1,0 +1,68 @@
+<section>
+  @if (authStateService.currentUser(); as user) {
+    <div class="relative">
+      <button
+        type="button"
+        class="flex items-center gap-2 cursor-pointer"
+        (click)="toggleOpen()"
+      >
+        <span class=" text-accent1">👤</span>
+        <span>
+          {{ user.username }}
+        </span>
+      </button>
+
+      @if (open()) {
+        <div class="absolute top-full bg-white border rounded shadow p-3 w-40 z-50 flex flex-col">
+          @if (user.role === 'ADMIN') {
+            <a
+              routerLink="/admin/chronicles"
+              class="hover:underline underline-offset-4 cursor-pointer text-center text-accent1"
+              (click)="close()"
+            >
+              Administration
+            </a>
+          }
+
+          <button
+            type="button"
+            class="w-full hover:underline underline-offset-4 cursor-pointer"
+            (click)="logout()"
+          >
+            Se déconnecter
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div
+      class="relative"
+      (click)="toggleOpen()"
+    >
+      <div class="flex items-center gap-1 cursor-pointer">
+        <span class=" text-accent1">👤</span>
+        <span class="text-sm hover:text-accent1 hover:underline hover:underline-offset-4 transition-all duration-500 ">
+          Compte
+        </span>
+      </div>
+
+      @if (open()) {
+        <div class="absolute top-full bg-white border rounded shadow p-3 w-30 z-50">
+          <a
+            routerLink="/login"
+            class="block text-accent1 hover:underline underline-offset-4 cursor-pointer text-center"
+          >
+            Connexion
+          </a>
+
+          <a
+            routerLink="/register"
+            class="block text-accent1 mt-2 hover:underline underline-offset-4 cursor-pointer text-center"
+          >
+            Inscription
+          </a>
+        </div>
+      }
+    </div>
+  }
+</section>
