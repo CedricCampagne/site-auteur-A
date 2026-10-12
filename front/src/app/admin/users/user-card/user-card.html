@@ -1,0 +1,55 @@
+
+<section class="border p-4 rounded bg-white shadow flex flex-col gap-3">
+  <!-- Infos -->
+  <div class="flex flex-col gap-1">
+    <div class="flex items-center gap-2">
+      <p class="font-bold text-lg">
+        {{ user().username }}
+      </p>
+    </div>
+
+    @if (user().email) {
+      <p class="text-gray-600 text-sm">
+        {{ user().email }}
+      </p>
+    }
+
+    <p class="text-gray-500 text-xs">
+      Créé le {{ user().createdAt | date: 'dd/MM/yyyy' }}
+    </p>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-4 justify-between">
+    <div>
+      @if (!user().isActive) {
+        <span class="text-red-600 font-bold text-sm border p-1">
+          Inactif
+        </span>
+      }
+    </div>
+
+    <div>
+      <button type="button" (click)="handleUpdate()">
+        <iconify-icon
+          icon="material-symbols:edit"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+
+      <button type="button" (click)="handleToggle()">
+        <iconify-icon
+          [attr.icon]="user().isActive ? 'mdi:toggle-switch' : 'mdi:toggle-switch-off'"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+
+      <button type="button" (click)="handleDelete()">
+        <iconify-icon
+          icon="material-symbols:delete-rounded"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+    </div>
+  </div>
+</section>

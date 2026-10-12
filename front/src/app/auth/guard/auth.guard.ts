@@ -1,9 +1,9 @@
 import { inject, Injectable } from "@angular/core";
-import { AuthStateService } from "./service/authState.service";
-import { Router } from "@angular/router";
+import { AuthStateService } from "../service/authState.service";
+import { CanActivate, Router } from "@angular/router";
 
 @Injectable({providedIn:'root'})
-export class AuthGuard {
+export class AuthGuard implements CanActivate {
     private authStateService = inject(AuthStateService);
     private router = inject(Router);
 

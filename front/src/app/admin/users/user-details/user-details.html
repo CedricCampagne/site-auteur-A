@@ -1,0 +1,128 @@
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-10">
+    Mise à jour de l'utilisateur
+  </h2>
+
+  <form
+    [formGroup]="updateForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-6 items-center"
+  >
+    <!-- Username -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="username" class="font-title text-title mb-1">
+        Nom :
+      </label>
+
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        autocomplete="username"
+        class="border rounded-md p-3 focus:outline-none"
+        [class.border-accent1]="updateForm.controls.username.touched && updateForm.controls.username.invalid"
+        [class.border-accent2]="!updateForm.controls.username.touched || updateForm.controls.username.valid"
+      >
+
+      @if (
+        updateForm.controls.username.touched &&
+        updateForm.controls.username.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          Le nom est obligatoire.
+        </p>
+      }
+
+      @if (
+        updateForm.controls.username.touched &&
+        updateForm.controls.username.hasError('minlength')
+      ) {
+        <p class="text-sm text-accent1">
+          Le nom doit contenir au moins 3 caractères.
+        </p>
+      }
+
+      @if (
+        updateForm.controls.username.touched &&
+        updateForm.controls.username.hasError('maxlength')
+      ) {
+        <p class="text-sm text-accent1">
+          Le nom ne doit pas dépasser 50 caractères.
+        </p>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="email" class="font-title text-title mb-1">
+        Email :
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        autocomplete="email"
+        class="border rounded-md p-3 focus:outline-none"
+        [class.border-accent1]="updateForm.controls.email.touched && updateForm.controls.email.invalid"
+        [class.border-accent2]="!updateForm.controls.email.touched || updateForm.controls.email.valid"
+      >
+
+      @if (
+        updateForm.controls.email.touched &&
+        updateForm.controls.email.hasError('required')
+      ) {
+        <p class="text-sm text-accent1">
+          L'email est obligatoire.
+        </p>
+      }
+
+      @if (
+        updateForm.controls.email.touched &&
+        updateForm.controls.email.hasError('email')
+      ) {
+        <p class="text-sm text-accent1">
+          Veuillez saisir une adresse email valide.
+        </p>
+      }
+
+      @if (
+        updateForm.controls.email.touched &&
+        updateForm.controls.email.hasError('maxlength')
+      ) {
+        <p class="text-sm text-accent1">
+          L'email ne doit pas dépasser 50 caractères.
+        </p>
+      }
+    </div>
+
+    <!-- Statut -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="isActive" class="flex items-center gap-2 font-title text-title">
+        <input
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        >
+        Activer l'utilisateur
+      </label>
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="submit"
+      class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+      [class.bg-accent1]="updateForm.invalid"
+      [class.bg-accent2]="updateForm.valid"
+      [disabled]="updateForm.invalid"
+    >
+      @if (updateForm.invalid) {
+        Formulaire incomplet
+      } @else {
+        Mettre à jour
+      }
+    </button>
+  </form>
+
+  <app-ui-messages />
+</section>
