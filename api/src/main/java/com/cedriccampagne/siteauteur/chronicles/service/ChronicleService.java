@@ -12,6 +12,7 @@ import com.cedriccampagne.siteauteur.chronicles.dto.ChronicleListCard;
 import com.cedriccampagne.siteauteur.chronicles.entity.Chronicle;
 
 import com.cedriccampagne.siteauteur.chronicles.exception.ChronicleNotFoundException;
+import com.cedriccampagne.siteauteur.chronicles.exception.ChroniclePublicationException;
 import com.cedriccampagne.siteauteur.chronicles.mapper.ChronicleMapper;
 
 import com.cedriccampagne.siteauteur.chronicles.repository.ChronicleRepository;
@@ -75,6 +76,10 @@ public class ChronicleService {
 
         chronicle.setSlug(slug);
 
+        if (chronicle.getPublishedAt() == null) {
+            chronicle.setIsActive(false);
+        }
+
         Chronicle saved = chronicleRepository.save(chronicle);
 
         return chronicleMapper.toAdminResponse(saved);
@@ -105,6 +110,12 @@ public class ChronicleService {
 
         chronicleMapper.updateChronicleForAdmin(request, chronicle);
 
+        if (chronicle.getPublishedAt() == null && chronicle.getIsActive()) {
+            throw new ChroniclePublicationException(
+                    "Impossible d'activer une chronique sans date de publication."
+            );
+        }
+
         Chronicle saved = chronicleRepository.save(chronicle);
 
         return chronicleMapper.toAdminUpdateResponse(saved);
@@ -113,6 +124,12 @@ public class ChronicleService {
     public AdminChronicleResponse toggle(Long id){
         Chronicle chronicle = chronicleRepository.findById(id)
                 .orElseThrow(()-> new ChronicleNotFoundException("Chronique introuvable"));
+
+        if (chronicle.getPublishedAt() == null) {
+            throw new ChroniclePublicationException(
+                    "Impossible d'activer une chronique sans date de publication."
+            );
+        }
 
         chronicle.setIsActive(!chronicle.getIsActive());
 

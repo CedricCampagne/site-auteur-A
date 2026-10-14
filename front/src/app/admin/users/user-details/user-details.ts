@@ -83,14 +83,14 @@ export class UserDetails {
       return;
     }
 
-    this.ui.clearMessage()
-    this.ui.startLoading();
-
     const id = this.routeId();
 
     if (id === null) {
       return;
     }
+
+    this.ui.clearMessage()
+    this.ui.startLoading()
 
     const updatedUser = this.updateForm.getRawValue();
 

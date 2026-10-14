@@ -56,6 +56,18 @@ export const routes: Routes = [
             {
                 path:"user/:id",
                 loadComponent: ()=> import('./admin/users/user-details/user-details').then(m =>m.UserDetails)
+            },
+            {
+                path:"chroniclesList",
+                loadComponent: () => import('./admin/chronicles/admin-chronicle-list/admin-chronicle-list').then(m=>m.AdminChronicleList)
+            },
+            {
+                path:"chronicles/create",
+                loadComponent: ()=> import('./admin/chronicles/admin-chronicle-create/admin-chronicle-create').then(m=>m.AdminChronicleCreate)
+            },
+            {
+                path:"chronicles/:id",
+                loadComponent: () => import('./admin/chronicles/admin-chronicle-details/admin-chronicle-details').then(m=>m.AdminChronicleDetails)
             }
         ]
     }

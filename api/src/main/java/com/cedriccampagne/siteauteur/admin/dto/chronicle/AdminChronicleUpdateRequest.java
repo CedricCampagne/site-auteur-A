@@ -24,7 +24,6 @@ public record AdminChronicleUpdateRequest(
         @Size(max = 255)
         String coverUrl,
 
-        @NotNull
         LocalDateTime publishedAt,
 
         @NotNull

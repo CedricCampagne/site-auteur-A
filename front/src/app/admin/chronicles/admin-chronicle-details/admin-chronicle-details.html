@@ -1,0 +1,172 @@
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-10">
+    Modifier une chronique
+  </h2>
+
+  <form
+    [formGroup]="updateForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-6 items-center"
+  >
+    <!-- Titre -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="title" class="font-title text-title mb-1">
+        Titre :
+      </label>
+
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.title.touched && updateForm.controls.title.invalid"
+        [class.border-accent2]="!updateForm.controls.title.touched || updateForm.controls.title.valid"
+      >
+
+      @if (updateForm.controls.title.touched && updateForm.controls.title.hasError('required')) {
+        <p class="text-sm text-accent1">Le titre est obligatoire.</p>
+      }
+
+      @if (updateForm.controls.title.touched && updateForm.controls.title.hasError('maxlength')) {
+        <p class="text-sm text-accent1">Le titre ne doit pas dépasser 255 caractères.</p>
+      }
+    </div>
+
+    <!-- Citation -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="quote" class="font-title text-title mb-1">
+        Citation :
+      </label>
+
+      <textarea
+        id="quote"
+        formControlName="quote"
+        rows="2"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.quote.touched && updateForm.controls.quote.invalid"
+        [class.border-accent2]="!updateForm.controls.quote.touched || updateForm.controls.quote.valid"
+      ></textarea>
+
+      @if (updateForm.controls.quote.touched && updateForm.controls.quote.hasError('required')) {
+        <p class="text-sm text-accent1">La citation est obligatoire.</p>
+      }
+    </div>
+
+    <!-- Résumé -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="summary" class="font-title text-title mb-1">
+        Résumé :
+      </label>
+
+      <textarea
+        id="summary"
+        formControlName="summary"
+        rows="3"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.summary.touched && updateForm.controls.summary.invalid"
+        [class.border-accent2]="!updateForm.controls.summary.touched || updateForm.controls.summary.valid"
+      ></textarea>
+
+      @if (updateForm.controls.summary.touched && updateForm.controls.summary.hasError('required')) {
+        <p class="text-sm text-accent1">Le résumé est obligatoire.</p>
+      }
+    </div>
+
+    <!-- Contenu -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="content" class="font-title text-title mb-1">
+        Contenu (Markdown) :
+      </label>
+
+      <textarea
+        id="content"
+        formControlName="content"
+        rows="12"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.content.touched && updateForm.controls.content.invalid"
+        [class.border-accent2]="!updateForm.controls.content.touched || updateForm.controls.content.valid"
+      ></textarea>
+
+      @if (updateForm.controls.content.touched && updateForm.controls.content.hasError('required')) {
+        <p class="text-sm text-accent1">Le contenu est obligatoire.</p>
+      }
+    </div>
+
+    <!-- URL de couverture -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="coverUrl" class="font-title text-title mb-1">
+        URL de l’image :
+      </label>
+
+      <input
+        type="text"
+        id="coverUrl"
+        formControlName="coverUrl"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.coverUrl.touched && updateForm.controls.coverUrl.invalid"
+        [class.border-accent2]="!updateForm.controls.coverUrl.touched || updateForm.controls.coverUrl.valid"
+      >
+
+      @if (updateForm.controls.coverUrl.touched && updateForm.controls.coverUrl.hasError('required')) {
+        <p class="text-sm text-accent1">L’URL de couverture est obligatoire.</p>
+      }
+
+      @if (updateForm.controls.coverUrl.touched && updateForm.controls.coverUrl.hasError('maxlength')) {
+        <p class="text-sm text-accent1">L’URL ne doit pas dépasser 255 caractères.</p>
+      }
+    </div>
+
+    <!-- Date de publication -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="publishedAt" class="font-title text-title mb-1">
+        Date de publication (facultative) :
+      </label>
+
+      <input
+        type="datetime-local"
+        id="publishedAt"
+        formControlName="publishedAt"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="updateForm.controls.publishedAt.touched && updateForm.controls.publishedAt.invalid"
+        [class.border-accent2]="!updateForm.controls.publishedAt.touched || updateForm.controls.publishedAt.valid"
+      >
+
+      <p class="text-sm text-gray-500">
+        Laisse ce champ vide si tu souhaites préparer un brouillon sans date de publication.
+      </p>
+    </div>
+
+    <!-- Statut -->
+    <div class="flex min-w-1/2 items-center gap-3">
+      <input
+        type="checkbox"
+        id="isActive"
+        formControlName="isActive"
+        class="h-5 w-5 accent-accent2"
+      >
+
+      <label for="isActive" class="font-title text-title">
+        Publier / activer la chronique
+      </label>
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="submit"
+      class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+      [class.bg-accent1]="updateForm.invalid"
+      [class.bg-accent2]="updateForm.valid"
+      [disabled]="updateForm.invalid || ui.isLoading()"
+    >
+      @if (ui.isLoading()) {
+        Mise à jour en cours...
+      } @else if (updateForm.invalid) {
+        Formulaire incomplet
+      } @else {
+        Mettre à jour la chronique
+      }
+    </button>
+  </form>
+
+  <app-ui-messages />
+</section>

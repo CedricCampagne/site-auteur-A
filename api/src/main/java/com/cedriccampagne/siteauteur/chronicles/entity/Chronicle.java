@@ -41,7 +41,7 @@ public class Chronicle {
     @Column(name = "cover_url", nullable = false, length = 255)
     private String coverUrl;
 
-    @Column(name = "published_at",nullable = false)
+    @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
     @Column(name ="is_active", nullable = false)

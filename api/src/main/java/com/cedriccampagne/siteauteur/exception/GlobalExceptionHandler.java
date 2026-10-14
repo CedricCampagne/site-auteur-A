@@ -4,6 +4,7 @@ import com.cedriccampagne.siteauteur.auth.exception.InvalidCredentialsException;
 import com.cedriccampagne.siteauteur.books.exception.BookNotFoundException;
 
 import com.cedriccampagne.siteauteur.chronicles.exception.ChronicleNotFoundException;
+import com.cedriccampagne.siteauteur.chronicles.exception.ChroniclePublicationException;
 import com.cedriccampagne.siteauteur.comments.exception.CommentNotFoundException;
 import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.exception.UserNotFoundException;
@@ -145,5 +146,19 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ChroniclePublicationException.class)
+    public ResponseEntity<ErrorResponse> handleChroniclePublicationException(
+            ChroniclePublicationException exception
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                exception.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                LocalDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 }

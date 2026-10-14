@@ -1,0 +1,144 @@
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-10">
+    Créer une chronique
+  </h2>
+
+  <form
+    [formGroup]="createForm"
+    (ngSubmit)="onsubmit()"
+    class="flex flex-col gap-6 items-center"
+  >
+    <!-- Titre -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="title" class="font-title text-title mb-1">Titre :</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.title.touched && createForm.controls.title.invalid"
+        [class.border-accent2]="!createForm.controls.title.touched || createForm.controls.title.valid"
+      />
+      @if (createForm.controls.title.touched && createForm.controls.title.hasError('required')) {
+        <p class="text-sm text-accent1">Le titre est obligatoire.</p>
+      }
+      @if (createForm.controls.title.touched && createForm.controls.title.hasError('maxlength')) {
+        <p class="text-sm text-accent1">Le titre ne doit pas dépasser 255 caractères.</p>
+      }
+    </div>
+
+    <!-- Citation -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="quote" class="font-title text-title mb-1">Citation :</label>
+      <textarea
+        id="quote"
+        formControlName="quote"
+        rows="2"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.quote.touched && createForm.controls.quote.invalid"
+        [class.border-accent2]="!createForm.controls.quote.touched || createForm.controls.quote.valid"
+      ></textarea>
+      @if (createForm.controls.quote.touched && createForm.controls.quote.hasError('required')) {
+        <p class="text-sm text-accent1">La citation est obligatoire.</p>
+      }
+    </div>
+
+    <!-- Résumé -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="summary" class="font-title text-title mb-1">Résumé :</label>
+      <textarea
+        id="summary"
+        formControlName="summary"
+        rows="3"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.summary.touched && createForm.controls.summary.invalid"
+        [class.border-accent2]="!createForm.controls.summary.touched || createForm.controls.summary.valid"
+      ></textarea>
+      @if (createForm.controls.summary.touched && createForm.controls.summary.hasError('required')) {
+        <p class="text-sm text-accent1">Le résumé est obligatoire.</p>
+      }
+    </div>
+
+    <!-- Contenu -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="content" class="font-title text-title mb-1">Contenu (Markdown) :</label>
+      <textarea
+        id="content"
+        formControlName="content"
+        rows="12"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.content.touched && createForm.controls.content.invalid"
+        [class.border-accent2]="!createForm.controls.content.touched || createForm.controls.content.valid"
+      ></textarea>
+      @if (createForm.controls.content.touched && createForm.controls.content.hasError('required')) {
+        <p class="text-sm text-accent1">Le contenu est obligatoire.</p>
+      }
+    </div>
+
+    <!-- URL de couverture -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="coverUrl" class="font-title text-title mb-1">URL de l’image :</label>
+      <input
+        type="text"
+        id="coverUrl"
+        formControlName="coverUrl"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.coverUrl.touched && createForm.controls.coverUrl.invalid"
+        [class.border-accent2]="!createForm.controls.coverUrl.touched || createForm.controls.coverUrl.valid"
+      />
+      @if (createForm.controls.coverUrl.touched && createForm.controls.coverUrl.hasError('required')) {
+        <p class="text-sm text-accent1">L’URL de couverture est obligatoire.</p>
+      }
+      @if (createForm.controls.coverUrl.touched && createForm.controls.coverUrl.hasError('maxlength')) {
+        <p class="text-sm text-accent1">L’URL ne doit pas dépasser 255 caractères.</p>
+      }
+    </div>
+
+    <!-- Date de publication -->
+    <div class="flex flex-col min-w-1/2 relative">
+      <label for="publishedAt" class="font-title text-title mb-1">
+        Date de publication (facultative) :
+      </label>
+      <input
+        type="datetime-local"
+        id="publishedAt"
+        formControlName="publishedAt"
+        class="border rounded-md p-3 focus:outline-none peer"
+        [class.border-accent1]="createForm.controls.publishedAt.touched && createForm.controls.publishedAt.invalid"
+        [class.border-accent2]="!createForm.controls.publishedAt.touched || createForm.controls.publishedAt.valid"
+      />
+      <p class="text-sm text-gray-500">
+        Laisse ce champ vide si tu souhaites préparer un brouillon sans date de publication.
+      </p>
+    </div>
+
+    <!-- Statut -->
+    <div class="flex min-w-1/2 items-center gap-3">
+      <input
+        type="checkbox"
+        id="isActive"
+        formControlName="isActive"
+        class="h-5 w-5 accent-accent2"
+      />
+      <label for="isActive" class="font-title text-title">
+        Publier / activer la chronique
+      </label>
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="submit"
+      class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+      [class.bg-accent1]="createForm.invalid"
+      [class.bg-accent2]="createForm.valid"
+    >
+      @if (createForm.invalid) {
+        Formulaire incomplet
+      } @else {
+        Créer la chronique
+      }
+    </button>
+  </form>
+
+  <app-ui-messages />
+</section>

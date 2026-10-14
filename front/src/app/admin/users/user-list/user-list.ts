@@ -28,8 +28,8 @@ export class UserList {
   deleteUser(id: number): void {
     this.adminUserService.delete(id).subscribe({
       next: () => {
-        this.users.update((users) =>
-          users.filter((user) => user.id !== id),
+        this.users.update((currentUsers) =>
+          currentUsers.filter((user) => user.id !== id),
         );
       },
       error: (error) => console.error('Erreur lors de la suppression', error),
