@@ -96,7 +96,7 @@
     >
       @if (ui.isLoading()) {
             Envoi en cours...
-        } @else if (loginForm.invalid && loginForm.controls.password.touched && loginForm.controls.email.touched) {
+        } @else if (loginForm.invalid) {
             Formulaire incomplet
         } @else {
             Se connecter
