@@ -68,6 +68,14 @@ export const routes: Routes = [
             {
                 path:"chronicles/:id",
                 loadComponent: () => import('./admin/chronicles/admin-chronicle-details/admin-chronicle-details').then(m=>m.AdminChronicleDetails)
+            },
+            {
+                path:"commentsList",
+                loadComponent: () => import('./admin/comments/admin-comment-list/admin-comment-list').then(m=>m.AdminCommentList)
+            },
+            {
+                path:"comments/:id",
+                loadComponent: ()=> import('./admin/comments/admin-comment-details/admin-comment-details').then(m=>m.AdminCommentDetails)
             }
         ]
     }

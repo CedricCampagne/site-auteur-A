@@ -156,13 +156,15 @@
       class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
       [class.bg-accent1]="updateForm.invalid"
       [class.bg-accent2]="updateForm.valid"
-      [disabled]="updateForm.invalid || ui.isLoading()"
+      [disabled]="updateForm.invalid || !hasChanges || ui.isLoading()"
     >
       @if (ui.isLoading()) {
         Mise à jour en cours...
       } @else if (updateForm.invalid) {
         Formulaire incomplet
-      } @else {
+      } @else if (!hasChanges) {
+        Aucune modification
+      }@else {
         Mettre à jour la chronique
       }
     </button>

@@ -89,7 +89,7 @@ export class AdminChronicleDetails {
   });
 
   onSubmit(){
-    if(this.updateForm.invalid){
+    if(this.updateForm.invalid || !this.hasChanges || this.ui.isLoading()){
       this.updateForm.markAllAsTouched();
       return;
     }
@@ -137,4 +137,24 @@ export class AdminChronicleDetails {
     });
   }
 
+  // Getter : indique si le formulaire diffère du commentaire initial
+  get hasChanges(): boolean {
+    const comment = this.chronicle();
+
+    if (!comment) {
+      return false;
+    }
+
+    return (
+      this.updateForm.controls.title.value !== comment.title ||
+      this.updateForm.controls.quote.value !== comment.quote ||
+      this.updateForm.controls.summary.value !== comment.summary ||
+      this.updateForm.controls.content.value !== comment.content ||
+      this.updateForm.controls.coverUrl.value !== comment.coverUrl ||
+      this.updateForm.controls.publishedAt.value !== comment.publishedAt ||
+      this.updateForm.controls.isActive.value !== comment.isActive
+    );
+  }
 }
+
+

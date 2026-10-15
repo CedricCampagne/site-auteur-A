@@ -1,0 +1,56 @@
+<section class="border p-4 rounded bg-white shadow flex flex-col gap-3">
+  <!-- Infos -->
+  <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 sm:flex-row">
+      <strong>Auteur :</strong>
+      <p>{{ comment().username }}</p>
+    </div>
+
+    <div class="flex flex-col gap-2 sm:flex-row">
+      <strong>Chronique :</strong>
+      <p>{{ comment().chronicleTitle }}</p>
+    </div>
+
+    <p class="italic text-gray-700">
+      "{{
+        comment().content.length > 80
+          ? comment().content.slice(0, 80) + '...'
+          : comment().content
+      }}"
+    </p>
+
+    <div class="h-8">
+      @if (!comment().isVisible) {
+        <span class="text-red-600 font-bold border p-1">
+          Masqué
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-4 justify-end">
+    <div>
+      <button type="button" (click)="handleUpdate()">
+        <iconify-icon
+          icon="material-symbols:edit"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+
+      <button type="button" (click)="handleToggle()">
+        <iconify-icon
+          [attr.icon]="comment().isVisible ? 'mdi:toggle-switch' : 'mdi:toggle-switch-off'"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+
+      <button type="button" (click)="handleDelete()">
+        <iconify-icon
+          icon="material-symbols:delete-rounded"
+          class="text-3xl p-1 border border-accent1 bg-white text-accent1 hover:bg-accent1 hover:text-white transition-all duration-500"
+        ></iconify-icon>
+      </button>
+    </div>
+  </div>
+</section>

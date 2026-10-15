@@ -78,7 +78,7 @@ export class UserDetails {
   });
 
   onSubmit(){
-    if(this.updateForm.invalid){
+   if(this.updateForm.invalid || !this.hasChanges || this.ui.isLoading()){
       this.updateForm.markAllAsTouched();
       return;
     }
@@ -116,5 +116,20 @@ export class UserDetails {
         }, 1400);
       }
     });
+  }
+
+  // Getter : indique si le formulaire diffère du commentaire initial
+  get hasChanges(): boolean {
+    const comment = this.user();
+
+    if (!comment) {
+      return false;
+    }
+
+    return (
+      this.updateForm.controls.username.value !== comment.username ||
+      this.updateForm.controls.email.value !== comment.email ||
+      this.updateForm.controls.isActive.value !== comment.isActive
+    );
   }
 }
