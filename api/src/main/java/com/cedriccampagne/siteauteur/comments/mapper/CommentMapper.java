@@ -3,6 +3,7 @@ package com.cedriccampagne.siteauteur.comments.mapper;
 import com.cedriccampagne.siteauteur.admin.dto.comment.AdminCommentResponse;
 import com.cedriccampagne.siteauteur.admin.dto.comment.AdminCommentUpdateRequest;
 import com.cedriccampagne.siteauteur.comments.dto.CommentCard;
+import com.cedriccampagne.siteauteur.comments.dto.CommentResponse;
 import com.cedriccampagne.siteauteur.comments.entity.Comment;
 import org.springframework.stereotype.Component;
 
@@ -36,4 +37,12 @@ public class CommentMapper {
         comment.setIsVisible(request.isVisible());
     }
 
+    public CommentResponse toCommentResponse (Comment comment) {
+        return new CommentResponse(
+                comment.getId(),
+                comment.getUser().getUsername(),
+                comment.getContent(),
+                comment.getCreatedAt()
+        );
+    }
 }
