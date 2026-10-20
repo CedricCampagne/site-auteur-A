@@ -1,0 +1,61 @@
+@if (open()) {
+  <!-- Fond sombre -->
+  <div
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-40"
+    (click)="handleClose()"
+  ></div>
+
+  <!-- Modal -->
+  <div
+    class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+      bg-bg-main p-6 rounded shadow-lg z-50 w-11/12 max-w-md
+      flex flex-col gap-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="comment-modal-title"
+  >
+    <form
+      (ngSubmit)="handleSubmit($event)"
+      class="flex flex-col items-center gap-4"
+    >
+      <h2 id="comment-modal-title" class="border-b-2 border-accent1">
+        Ajouter votre commentaire
+      </h2>
+
+      <textarea
+        name="comment"
+        id="comment"
+        rows="8"
+        cols="30"
+        class="border p-2 w-full"
+        [(ngModel)]="content"
+        maxlength="1000"
+      ></textarea>
+
+      <div class="min-h-5">
+        @if (error()) {
+          <p class="text-red-500 text-sm">{{ error() }}</p>
+        }
+      </div>
+      
+      <app-ui-messages />
+
+      <div class="flex gap-2">
+        <button
+          type="submit"
+          class="bg-accent1 text-white p-2 rounded-xs"
+        >
+          Valider
+        </button>
+
+        <button
+          type="button"
+          class="bg-accent2 text-white p-2 rounded-xs"
+          (click)="handleClose()"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+}

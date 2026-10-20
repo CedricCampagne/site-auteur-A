@@ -48,8 +48,21 @@
             Commentaires ({{ comments().length }})
           </h3>
 
+          <button
+            class="p-1 bg-accent1 text-white hover:bg-white hover:text-accent1 transition-all duration-500 self-center border border-accent1"
+            (click)="openCreateComment()"
+          >
+            Ajouter un commentaire
+          </button>
           <!-- Modal / ajout de commentaire à faire plus tard -->
-
+          @if (openModal()) {
+          <app-comment-create-modal
+            [open]="openModal()"
+            (created)="refreshCommentsList()"
+            (close)="closeCreateComment()"
+            [chronicleId]="chronicle.id"
+          />
+          }
         </div>
 
         @if (comments().length === 0) {
