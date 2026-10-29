@@ -7,6 +7,7 @@ public record AdminUserResponse(
         String username,
         String email,
         LocalDateTime createdAt,
-        Boolean isActive
+        Boolean isActive,
+        String role
 ) {
 }

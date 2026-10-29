@@ -31,14 +31,21 @@ export class AdminCommentList {
   }
 
   deleteComment(id: number){
+    this.ui.startLoading();
     this.adminCommentService.delete(id).subscribe({
       next: ()=> {
-        this.comments.update((currentComments)=>
-          currentComments.filter((comment) => comment.id != id)
-        );
+        this.ui.stopLoading().then(()=>{
+          this.comments.update((currentComments)=>
+            currentComments.filter((comment) => comment.id != id)
+          );
+        this.ui.showSuccess("Suppression éffectuée !");
+        });
       },
       error:(err) => {
+        this.ui.stopLoading().then(()=>{
+        this.ui.showError("Erreur lors de la suppression");
         console.error("Erreur lors de la suppression", err);
+        });
       }
     });
   }

@@ -7,15 +7,28 @@ export class UiStore {
     successMessage = signal<string | null>(null);
     errorMessage = signal<string | null>(null);
 
+    private loadingStartedAt = 0;
+    private readonly minLoadingDuration = 1500;
+
     hasMessage = computed(
         () => this.successMessage() !== null || this.errorMessage() !== null,
     );
+
     startLoading(){
+        this.loadingStartedAt = Date.now();
         this.isLoading.set(true);
     }
 
-    stopLoading(){
-        this.isLoading.set(false);
+    stopLoading(): Promise<void> {
+        const elapsed = Date.now() - this.loadingStartedAt;
+        const remaining = Math.max(0, this.minLoadingDuration - elapsed);
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+            this.isLoading.set(false);
+            resolve();
+            }, remaining);
+        });
     }
 
     showSuccess(message: string) {

@@ -1,18 +1,18 @@
-<div class="fixed top-4 right-4 z-50 flex flex-col gap-2">
+<div class="fixed top-16 left-1/2 -translate-x-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md flex-col gap-2">
   @if (ui.successMessage(); as message) {
-    <p class="bg-green-600 text-white p-3 rounded shadow-lg">
+    <p class="bg-white text-accent2 border-2 border-accent2 p-3 rounded shadow-lg text-center">
       {{ message }}
     </p>
   }
 
   @if (ui.errorMessage(); as message) {
-    <p class="bg-red-600 text-white p-3 rounded shadow-lg">
+    <p class="bg-accent1 text-white p-3 rounded shadow-lg text-center">
       {{ message }}
     </p>
   }
 
   @if (ui.isLoading()) {
-    <p class="bg-blue-600 text-white p-3 rounded shadow-lg">
+    <p class="bg-accent2 text-white p-3 rounded shadow-lg text-center">
       Chargement...
     </p>
   }

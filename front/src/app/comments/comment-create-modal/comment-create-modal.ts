@@ -7,7 +7,7 @@ import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
 
 @Component({
   selector: 'app-comment-create-modal',
-  imports: [FormsModule, UiMessages],
+  imports: [FormsModule],
   templateUrl: './comment-create-modal.html',
   styleUrl: './comment-create-modal.css',
 })
@@ -64,25 +64,20 @@ export class CommentCreateModal {
 
     this.commentService.create(payload).subscribe({
       next: () =>{
-        setTimeout(() => {
-          this.ui.stopLoading();
+        this.ui.stopLoading().then(()=>{
           this.ui.showSuccess('Commentaire posté!');
-        }, 800);
-
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.created.emit();
-          this.close.emit();
-        }, 1400);
+            
+          setTimeout(()=>{
+            this.ui.clearMessage();
+            this.created.emit();
+            this.close.emit();
+          }, 1500);
+        });
       }, error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
-          this.ui.showError('Erreur lors de la création');
-          this.close.emit();
-        }, 1400);
+          this.ui.stopLoading().then(()=>{
+            this.ui.showError('Erreur lors de la création');
+            this.close.emit();
+          });
       }
     });
 

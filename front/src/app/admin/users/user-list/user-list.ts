@@ -3,6 +3,7 @@ import { AdminUserService } from '../service/admin-user.service';
 import { AdminUserResponse } from '../models/adminUserResponse';
 import { UserCard } from '../user-card/user-card';
 import { Router } from '@angular/router';
+import { UiStore } from '../../../core/stores/ui.store';
 
 @Component({
   selector: 'app-user-list',
@@ -15,6 +16,7 @@ export class UserList {
 
   private adminUserService = inject(AdminUserService);
   private router = inject(Router);
+  private ui = inject(UiStore);
 
   users = signal<AdminUserResponse[]>([]);
 
@@ -26,13 +28,22 @@ export class UserList {
   }
 
   deleteUser(id: number): void {
+    this.ui.startLoading();
     this.adminUserService.delete(id).subscribe({
       next: () => {
-        this.users.update((currentUsers) =>
-          currentUsers.filter((user) => user.id !== id),
-        );
+        this.ui.stopLoading().then(()=>{
+          this.users.update((currentUsers) =>
+            currentUsers.filter((user) => user.id !== id),
+          );
+          this.ui.showSuccess("Suppression éffectuée !")
+        });
       },
-      error: (error) => console.error('Erreur lors de la suppression', error),
+      error: (error) => {
+        this.ui.stopLoading().then(() => {
+          console.error('Erreur lors de la suppression', error);
+          this.ui.showError('Erreur lors de la suppression.');
+        });
+      }
     });
   }
 

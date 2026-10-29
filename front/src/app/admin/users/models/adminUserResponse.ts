@@ -4,4 +4,5 @@ export interface AdminUserResponse {
     email: string;
     createdAt: string;
     isActive: boolean;
+    role: string;
 }

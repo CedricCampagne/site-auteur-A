@@ -49,7 +49,6 @@ export class AdminChronicleCreate {
       }),
   });
 
-
   onsubmit(){
     if(this.createForm.invalid) {
       this.createForm.markAllAsTouched();
@@ -68,29 +67,20 @@ export class AdminChronicleCreate {
 
     this.adminChronicleService.create(payload).subscribe({
       next: () => {
-        setTimeout(() => {
-          this.ui.stopLoading();
+        this.ui.stopLoading().then(()=>{
           this.ui.showSuccess('Création effectuée !');
-        }, 800);
-
+        });
+    
         setTimeout(() => {
           this.ui.clearMessage();
           this.router.navigate(['/admin/chroniclesList']);
-        }, 1400);
+        }, 1500);
       },
-      error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
+      error: (err) => {      
+        this.ui.stopLoading().then(()=>{
           this.ui.showError("Problème lors de la création !");
-        }, 1400);
+        });              
       }
     });
-
-    
-
-
   }
 }

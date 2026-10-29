@@ -96,24 +96,25 @@ export class UserDetails {
 
     this.adminUserService.update(updatedUser, id).subscribe({
       next : () => {
-        setTimeout(() => {
-          this.ui.stopLoading();
+        this.ui.stopLoading().then(()=>{
           this.ui.showSuccess('Mise a jour effectuée !');
-        }, 800);
-
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.router.navigate(['/admin/userList']);
-        }, 1400);
+          
+          setTimeout(() => {
+            this.ui.clearMessage();
+            this.router.navigate(['/admin/userList']);
+          }, 1500);
+        });
+      
       },
       error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
+    
+        this.ui.stopLoading().then(()=>{
           this.ui.showError("Problème lors de la mise a jour de l'utilisateur");
-        }, 1400);
+        });
+    
+
+   
+     
       }
     });
   }
