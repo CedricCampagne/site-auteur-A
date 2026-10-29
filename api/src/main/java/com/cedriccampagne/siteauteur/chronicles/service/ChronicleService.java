@@ -18,6 +18,7 @@ import com.cedriccampagne.siteauteur.chronicles.mapper.ChronicleMapper;
 import com.cedriccampagne.siteauteur.chronicles.repository.ChronicleRepository;
 
 import com.cedriccampagne.siteauteur.common.service.SlugService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,7 +87,7 @@ public class ChronicleService {
     }
 
     public List<AdminChronicleResponse> getAllForAdmin() {
-        return chronicleRepository.findAll()
+        return chronicleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(chronicleMapper::toAdminResponse)
                 .toList();
