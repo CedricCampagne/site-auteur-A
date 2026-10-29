@@ -17,6 +17,7 @@ import com.cedriccampagne.siteauteur.comments.repository.CommentRepository;
 
 import com.cedriccampagne.siteauteur.users.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class CommentService {
     }
 
     public List<AdminCommentResponse> getAllForAdmin() {
-        return commentRepository.findAll()
+        return commentRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(commentMapper::toAdminCommentResponse)
                 .toList();

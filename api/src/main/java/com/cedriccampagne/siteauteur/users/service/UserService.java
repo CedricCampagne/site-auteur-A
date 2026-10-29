@@ -12,6 +12,7 @@ import com.cedriccampagne.siteauteur.users.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class UserService {
     private final UserMapper userMapper;
 
     public List<AdminUserResponse> getAllForAdmin(){
-        return userRepository.findAll()
+        return userRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(userMapper::toAdminResponse)
                 .toList();
