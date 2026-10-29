@@ -9,7 +9,7 @@ import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, UiMessages],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -48,25 +48,20 @@ export class Login {
 
     this.authService.login(credentials).subscribe({
       next: (res) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-          this.ui.showSuccess('Connexion autorisée!');
-        }, 800);
+        this.ui.stopLoading().then(() => {
+          this.ui.showSuccess('Connexion autorisée !');
 
-        setTimeout(() => {
-          this.authStateService.currentUser.set(res);
-          this.ui.clearMessage();
-          this.router.navigate(['']);
-        }, 1400);
+          setTimeout(() => {
+            this.authStateService.currentUser.set(res);
+            this.ui.clearMessage();
+            this.router.navigate(['']);
+          }, 1500);
+        });
       },
-      error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
+      error: () => {
+        this.ui.stopLoading().then(() => {
           this.ui.showError('Email ou mot de passe incorrect');
-        }, 1400);
+        });
       },
     });
   }

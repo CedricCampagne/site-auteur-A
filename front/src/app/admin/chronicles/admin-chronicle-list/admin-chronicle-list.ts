@@ -29,14 +29,22 @@ export class AdminChronicleList {
   }
 
   deleteChronicle(id: number){
+    this.ui.startLoading();
     this.adminChronicleService.delete(id).subscribe({
       next: () => {
-        this.chronicles.update((currentChronicles) =>
-          currentChronicles.filter((chronicle)=> chronicle.id !== id)
-        );
+        this.ui.stopLoading().then(()=>{
+          this.chronicles.update((currentChronicles) =>
+            currentChronicles.filter((chronicle)=> chronicle.id !== id)
+          );
+          this.ui.showSuccess("Suppression éffectuée !")
+        });
+
       },
       error: (err) => {
-        console.error("Erreur lors de la suppression", err)
+        this.ui.stopLoading().then(() => {
+          console.error('Erreur lors de la suppression', err);
+          this.ui.showError('Erreur lors de la suppression.');
+        });
       }
     });
   }

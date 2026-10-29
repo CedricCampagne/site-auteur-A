@@ -85,27 +85,26 @@ export class AdminCommentDetails {
 
     this.adminCommentService.update(updatedComment, id).subscribe({
       next : () => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-          this.ui.showSuccess('Mise à jour effectuée !');
-        }, 800);
 
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.router.navigate(['/admin/commentsList']);
-        }, 1400);
+        this.ui.stopLoading().then(()=>{
+          this.ui.showSuccess('Mise à jour effectuée !');
+          
+          setTimeout(() => {
+            this.ui.clearMessage();
+            this.router.navigate(['/admin/commentsList']);
+          }, 1500);
+        });
+
       },
       error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
+       
+        this.ui.stopLoading().then(()=> {
           const message = err.error?.message
             ?? "Erreur lors du changement de statut.";
-
+  
           this.ui.showError(message);
-        }, 1400);
+
+        });      
       }
     });
   }

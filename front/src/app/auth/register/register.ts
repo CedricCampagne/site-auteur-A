@@ -9,7 +9,7 @@ import { UiStore } from '../../core/stores/ui.store';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, UiMessages],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -65,36 +65,29 @@ export class Register {
 
     this.authService.register(credentials).subscribe({
       next: (res) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-          this.ui.showSuccess('Connexion autorisée!');
-        }, 800);
+        this.ui.stopLoading().then(()=>{
+          this.ui.showSuccess('Inscription réussie !');
 
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.router.navigate(['']);
-        }, 1400);
+          setTimeout(() => {
+            this.ui.clearMessage();
+            this.router.navigate(['/login']);
+          }, 1500);
+        });
       },
       error: (err) => {
-        setTimeout(() => {
-          this.ui.stopLoading();
-        }, 800);
-
-        setTimeout(() => {
+        this.ui.stopLoading().then(()=>{
           this.ui.showError('Email ou mot de passe incorrect');
-        }, 1400);
+        });
       },
     });
   }
 }
 
-  function passwordsMatch(
-  control: AbstractControl
-): ValidationErrors | null {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
+  function passwordsMatch(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
 
-  return password === confirmPassword
-    ? null
-    : { passwordsMismatch: true };
-}
+    return password === confirmPassword
+      ? null
+      : { passwordsMismatch: true };
+  }
