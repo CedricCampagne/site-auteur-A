@@ -11,7 +11,7 @@ import { MarkdownPipe } from '../../shared/pipe/markdown.pipe';
 @Component({
   selector: 'app-chronicle-details',
   standalone: true,
-  imports: [DatePipe, CommentCard, CommentCreateModal, MarkdownPipe],
+  imports: [DatePipe, CommentCard, CommentCreateModal,MarkdownPipe ],
   templateUrl: './chronicle-details.html',
   styleUrl: './chronicle-details.css',
 })

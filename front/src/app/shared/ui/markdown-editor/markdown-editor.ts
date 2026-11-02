@@ -8,6 +8,7 @@ import EasyMDE from 'easymde';
 @Component({
   selector: 'app-markdown-editor',
   template: `<textarea #area></textarea>`,
+  host: { class: 'block w-full min-w-0' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -21,6 +22,7 @@ export class MarkdownEditor implements ControlValueAccessor, OnDestroy {
   private area = viewChild.required<ElementRef<HTMLTextAreaElement>>('area');
   private editor?: EasyMDE;
   private pendingValue = '';
+	private silent = false;
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
@@ -37,10 +39,11 @@ export class MarkdownEditor implements ControlValueAccessor, OnDestroy {
         previewClass: ['markdown'],
       });
 
-      this.editor.codemirror.on('change', () => {
-        this.onChange(this.editor!.value());
-        this.cdr.markForCheck();
-      });
+      this.editor.codemirror.on('change', (cm, change) => {
+				if (change.origin === 'setValue') return;
+				this.onChange(this.editor!.value());
+				this.cdr.markForCheck();
+			});
 
       this.editor.codemirror.on('blur', () => {
         this.onTouched();
@@ -49,12 +52,14 @@ export class MarkdownEditor implements ControlValueAccessor, OnDestroy {
     });
   }
 
-  writeValue(value: string | null): void {
-    this.pendingValue = value ?? '';
-    if (this.editor && this.editor.value() !== this.pendingValue) {
-      this.editor.value(this.pendingValue);
-    }
-  }
+	writeValue(value: string | null): void {
+		this.pendingValue = value ?? '';
+		if (this.editor && this.editor.value() !== this.pendingValue) {
+			this.silent = true;
+			this.editor.value(this.pendingValue);
+			this.silent = false;
+		}
+	}
 
   registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;

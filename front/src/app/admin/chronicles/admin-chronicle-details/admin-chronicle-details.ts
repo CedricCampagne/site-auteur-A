@@ -6,10 +6,10 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
-
+import { MarkdownEditor } from '../../../shared/ui/markdown-editor/markdown-editor'
 @Component({
   selector: 'app-admin-chronicle-details',
-  imports: [UiMessages, ReactiveFormsModule],
+  imports: [UiMessages, ReactiveFormsModule, MarkdownEditor],
   templateUrl: './admin-chronicle-details.html',
   styleUrl: './admin-chronicle-details.css',
 })
@@ -110,7 +110,7 @@ export class AdminChronicleDetails {
       publishedAt: updatedChronicle.publishedAt || null
     }
 
-    forkJoin([this.adminChronicleService.update(updatedChronicle, id), timer(1500)]).subscribe({
+    forkJoin([this.adminChronicleService.update(payload, id), timer(1500)]).subscribe({
       next: () =>{
         this.ui.stopLoading();
         this.ui.showSuccess('Mise à jour effectuée !');
@@ -126,20 +126,20 @@ export class AdminChronicleDetails {
   
   // Getter : indique si le formulaire diffère du commentaire initial
   get hasChanges(): boolean {
-    const comment = this.chronicle();
+    const chronicle = this.chronicle();
 
-    if (!comment) {
+    if (!chronicle) {
       return false;
     }
 
     return (
-      this.updateForm.controls.title.value !== comment.title ||
-      this.updateForm.controls.quote.value !== comment.quote ||
-      this.updateForm.controls.summary.value !== comment.summary ||
-      this.updateForm.controls.content.value !== comment.content ||
-      this.updateForm.controls.coverUrl.value !== comment.coverUrl ||
-      this.updateForm.controls.publishedAt.value !== comment.publishedAt ||
-      this.updateForm.controls.isActive.value !== comment.isActive
+      this.updateForm.controls.title.value !== chronicle.title ||
+      this.updateForm.controls.quote.value !== chronicle.quote ||
+      this.updateForm.controls.summary.value !== chronicle.summary ||
+      this.updateForm.controls.content.value !== chronicle.content ||
+      this.updateForm.controls.coverUrl.value !== chronicle.coverUrl ||
+      this.updateForm.controls.publishedAt.value !== chronicle.publishedAt ||
+      this.updateForm.controls.isActive.value !== chronicle.isActive
     );
   }
 }
