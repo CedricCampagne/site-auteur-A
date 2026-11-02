@@ -5,6 +5,7 @@ import { UiStore } from '../../../core/stores/ui.store';
 import { Router } from '@angular/router';
 import { AdminCommentCard } from '../admin-comment-card/admin-comment-card';
 import 'iconify-icon';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-admin-comment-list',
@@ -32,20 +33,17 @@ export class AdminCommentList {
 
   deleteComment(id: number){
     this.ui.startLoading();
-    this.adminCommentService.delete(id).subscribe({
-      next: ()=> {
-        this.ui.stopLoading().then(()=>{
-          this.comments.update((currentComments)=>
-            currentComments.filter((comment) => comment.id != id)
-          );
+
+    forkJoin([this.adminCommentService.delete(id), timer(1500)]).subscribe({
+      next : () => {
+        this.ui.stopLoading();
+        this.comments.update((currentComments)=>
+          currentComments.filter((comment) => comment.id != id)
+        );
         this.ui.showSuccess("Suppression éffectuée !");
-        });
-      },
-      error:(err) => {
-        this.ui.stopLoading().then(()=>{
-        this.ui.showError("Erreur lors de la suppression");
-        console.error("Erreur lors de la suppression", err);
-        });
+      }, error : (err) => {
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Erreur lors de la suppression');
       }
     });
   }

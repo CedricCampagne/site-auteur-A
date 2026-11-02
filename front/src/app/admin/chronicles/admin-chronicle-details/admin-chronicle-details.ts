@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminChronicleService } from '../service/admin-chronicle.service';
 import { UiStore } from '../../../core/stores/ui.store';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { map, of, switchMap } from 'rxjs';
+import { forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 
@@ -110,28 +110,20 @@ export class AdminChronicleDetails {
       publishedAt: updatedChronicle.publishedAt || null
     }
 
-    this.adminChronicleService.update(updatedChronicle, id).subscribe({
-      next : () => {
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Mise à jour effectuée !');
-        });
-  
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.router.navigate(['/admin/chroniclesList']);
-        }, 1500);
+    forkJoin([this.adminChronicleService.update(updatedChronicle, id), timer(1500)]).subscribe({
+      next: () =>{
+        this.ui.stopLoading();
+        this.ui.showSuccess('Mise à jour effectuée !');
+        this.router.navigate(['/admin/chroniclesList']);
       },
       error: (err) => {
-        this.ui.stopLoading().then(()=>{
-          const message = err.error?.message
-            ?? "Erreur lors du changement de statut.";
-  
-          this.ui.showError(message);
-        });
+        this.ui.stopLoading();
+        const message = err.error?.message ?? "Erreur lors de la mise à jour.";
+        this.ui.showError(message);
       }
     });
   }
-
+  
   // Getter : indique si le formulaire diffère du commentaire initial
   get hasChanges(): boolean {
     const comment = this.chronicle();

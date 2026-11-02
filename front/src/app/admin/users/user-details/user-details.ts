@@ -3,8 +3,7 @@ import { AdminUserService } from '../service/admin-user.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap, of } from 'rxjs';
-import { AdminUserResponse } from '../models/adminUserResponse';
+import { map, switchMap, of, forkJoin, timer } from 'rxjs';
 import { UiStore } from '../../../core/stores/ui.store';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 
@@ -94,27 +93,15 @@ export class UserDetails {
 
     const updatedUser = this.updateForm.getRawValue();
 
-    this.adminUserService.update(updatedUser, id).subscribe({
-      next : () => {
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Mise a jour effectuée !');
-          
-          setTimeout(() => {
-            this.ui.clearMessage();
-            this.router.navigate(['/admin/userList']);
-          }, 1500);
-        });
-      
+    forkJoin([this.adminUserService.update(updatedUser, id), timer(1500)]).subscribe({
+      next : () =>{
+        this.ui.stopLoading();
+        this.ui.showSuccess('Mise a jour effectuée !');
+        this.router.navigate(['/admin/userList']);
       },
       error: (err) => {
-    
-        this.ui.stopLoading().then(()=>{
-          this.ui.showError("Problème lors de la mise a jour de l'utilisateur");
-        });
-    
-
-   
-     
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? "Problème lors de la mise a jour de l'utilisateur");
       }
     });
   }

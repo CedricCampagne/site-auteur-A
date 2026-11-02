@@ -4,7 +4,7 @@ import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 import { UiStore } from '../../core/stores/ui.store';
 import { AuthStateService } from '../service/authState.service';
-import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -41,28 +41,20 @@ export class Login {
       return;
     }
 
-    this.ui.clearMessage()
     this.ui.startLoading();
 
     const credentials = this.loginForm.getRawValue();
 
-    this.authService.login(credentials).subscribe({
-      next: (res) => {
-        this.ui.stopLoading().then(() => {
-          this.ui.showSuccess('Connexion autorisée !');
-
-          setTimeout(() => {
-            this.authStateService.currentUser.set(res);
-            this.ui.clearMessage();
-            this.router.navigate(['']);
-          }, 1500);
-        });
-      },
-      error: () => {
-        this.ui.stopLoading().then(() => {
-          this.ui.showError('Email ou mot de passe incorrect');
-        });
-      },
+    forkJoin([this.authService.login(credentials), timer(1500)]).subscribe({
+      next : ([user])=>{
+        this.ui.stopLoading();
+        this.authStateService.currentUser.set(user);
+        this.ui.showSuccess('Connexion autorisée !');
+        this.router.navigate(['']);
+      }, error : (err) =>{
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Email ou mot de passe incorrect');
+      }
     });
   }
 }

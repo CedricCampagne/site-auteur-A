@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UiStore } from '../../../core/stores/ui.store';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 import { AdminChronicleCreateRequest } from '../models/adminChronicleCreateRequest';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-admin-chronicle-create',
@@ -56,8 +57,8 @@ export class AdminChronicleCreate {
     }
 
     this.ui.clearMessage();
-    this.ui.isLoading();
-
+    this.ui.startLoading();
+    
     const createdChronicle: AdminChronicleCreateRequest = this.createForm.getRawValue();
 
     const payload = {
@@ -65,22 +66,17 @@ export class AdminChronicleCreate {
       publishedAt: createdChronicle.publishedAt || null
     }
 
-    this.adminChronicleService.create(payload).subscribe({
-      next: () => {
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Création effectuée !');
-        });
-    
-        setTimeout(() => {
-          this.ui.clearMessage();
-          this.router.navigate(['/admin/chroniclesList']);
-        }, 1500);
+    forkJoin([this.adminChronicleService.create(payload), timer(1500)]).subscribe({
+      next: ()=> {
+        this.ui.stopLoading();
+        this.ui.showSuccess('Création effectuée !');
+        this.router.navigate(['/admin/chroniclesList']);
       },
-      error: (err) => {      
-        this.ui.stopLoading().then(()=>{
-          this.ui.showError("Problème lors de la création !");
-        });              
+      error : (err) =>{
+        this.ui.stopLoading();
+        this.ui.showError("Problème lors de la création !");
       }
     });
+
   }
 }

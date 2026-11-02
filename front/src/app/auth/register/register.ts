@@ -5,6 +5,8 @@ import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
 import { AuthService } from '../service/auth.service';
 import { AuthStateService } from '../service/authState.service';
 import { UiStore } from '../../core/stores/ui.store';
+import { forkJoin, timer } from 'rxjs';
+import { submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-register',
@@ -63,22 +65,15 @@ export class Register {
     const { username, email, password} = this.registerForm.getRawValue();
     const credentials = { username, email, password};
 
-    this.authService.register(credentials).subscribe({
-      next: (res) => {
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Inscription réussie !');
-
-          setTimeout(() => {
-            this.ui.clearMessage();
-            this.router.navigate(['/login']);
-          }, 1500);
-        });
-      },
-      error: (err) => {
-        this.ui.stopLoading().then(()=>{
-          this.ui.showError('Email ou mot de passe incorrect');
-        });
-      },
+    forkJoin([this.authService.register(credentials), timer(1500)]).subscribe({
+      next: ()=> {
+        this.ui.stopLoading();
+        this.ui.showSuccess('Inscription réussie !');
+        this.router.navigate(['/login']);
+      }, error : (err) =>{
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Email ou mot de passe incorrect');
+      }
     });
   }
 }
