@@ -7,7 +7,6 @@ import { DatePipe } from '@angular/common';
 import { CommentCard } from '../../shared/ui/comment-card/comment-card';
 import { CommentCreateModal } from '../../comments/comment-create-modal/comment-create-modal';
 
-
 @Component({
   selector: 'app-chronicle-details',
   standalone: true,

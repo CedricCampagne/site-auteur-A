@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { AdminChronicleService } from '../service/admin-chronicle.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UiStore } from '../../../core/stores/ui.store';
-import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 import { AdminChronicleCreateRequest } from '../models/adminChronicleCreateRequest';
 import { forkJoin, timer } from 'rxjs';
+
+import { MarkdownEditor } from '../../../shared/ui/markdown-editor/markdown-editor'
 
 @Component({
   selector: 'app-admin-chronicle-create',
   standalone: true,
-  imports: [ReactiveFormsModule, UiMessages],
+  imports: [ReactiveFormsModule, MarkdownEditor],
   templateUrl: './admin-chronicle-create.html',
   styleUrl: './admin-chronicle-create.css',
 })
