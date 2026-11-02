@@ -6,11 +6,12 @@ import { map, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { CommentCard } from '../../shared/ui/comment-card/comment-card';
 import { CommentCreateModal } from '../../comments/comment-create-modal/comment-create-modal';
+import { MarkdownPipe } from '../../shared/pipe/markdown.pipe';
 
 @Component({
   selector: 'app-chronicle-details',
   standalone: true,
-  imports: [DatePipe, CommentCard, CommentCreateModal],
+  imports: [DatePipe, CommentCard, CommentCreateModal, MarkdownPipe],
   templateUrl: './chronicle-details.html',
   styleUrl: './chronicle-details.css',
 })
