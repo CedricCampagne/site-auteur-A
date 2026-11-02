@@ -4,6 +4,7 @@ import { AdminUserResponse } from '../models/adminUserResponse';
 import { UserCard } from '../user-card/user-card';
 import { Router } from '@angular/router';
 import { UiStore } from '../../../core/stores/ui.store';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -29,20 +30,18 @@ export class UserList {
 
   deleteUser(id: number): void {
     this.ui.startLoading();
-    this.adminUserService.delete(id).subscribe({
-      next: () => {
-        this.ui.stopLoading().then(()=>{
-          this.users.update((currentUsers) =>
-            currentUsers.filter((user) => user.id !== id),
-          );
-          this.ui.showSuccess("Suppression éffectuée !")
-        });
+
+    forkJoin([this.adminUserService.delete(id), timer(1500)]).subscribe({
+      next : () => {
+        this.ui.stopLoading();
+        this.users.update((currentUsers) =>
+          currentUsers.filter((user) => user.id !== id),
+        );
+        this.ui.showSuccess("Suppression effectuée !")
       },
-      error: (error) => {
-        this.ui.stopLoading().then(() => {
-          console.error('Erreur lors de la suppression', error);
-          this.ui.showError('Erreur lors de la suppression.');
-        });
+      error : (err) => {
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Erreur lors de la suppression.');
       }
     });
   }

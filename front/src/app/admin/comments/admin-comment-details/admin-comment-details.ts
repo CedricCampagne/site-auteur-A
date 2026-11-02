@@ -1,7 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { map, of, switchMap } from 'rxjs';
+import { forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 import { AdminCommentService } from '../service/admin-comment.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -83,28 +83,17 @@ export class AdminCommentDetails {
 
     const updatedComment = this.updateForm.getRawValue();
 
-    this.adminCommentService.update(updatedComment, id).subscribe({
-      next : () => {
-
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Mise à jour effectuée !');
-          
-          setTimeout(() => {
-            this.ui.clearMessage();
-            this.router.navigate(['/admin/commentsList']);
-          }, 1500);
-        });
-
-      },
-      error: (err) => {
-       
-        this.ui.stopLoading().then(()=> {
-          const message = err.error?.message
-            ?? "Erreur lors du changement de statut.";
+    forkJoin([this.adminCommentService.update(updatedComment, id), timer(1500)]).subscribe({
+      next : ()=>{
+        this.ui.stopLoading();
+        this.ui.showSuccess('Mise à jour effectuée !');
+        this.router.navigate(['/admin/commentsList']);
+      }, error : (err) =>{
+        this.ui.stopLoading();
+        const message = err.error?.message
+          ?? "Erreur lors du changement de statut.";
   
-          this.ui.showError(message);
-
-        });      
+        this.ui.showError(message);
       }
     });
   }

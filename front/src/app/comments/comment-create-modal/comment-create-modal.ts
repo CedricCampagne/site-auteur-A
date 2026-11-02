@@ -4,6 +4,7 @@ import { CommentService } from '../services/comment.service';
 import { CommentCreateRequest } from '../models/commentCreateRequest';
 import { UiStore } from '../../core/stores/ui.store';
 import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-comment-create-modal',
@@ -62,26 +63,19 @@ export class CommentCreateModal {
       chronicleId: this.chronicleId(),
     };
 
-    this.commentService.create(payload).subscribe({
-      next: () =>{
-        this.ui.stopLoading().then(()=>{
-          this.ui.showSuccess('Commentaire posté!');
-            
-          setTimeout(()=>{
-            this.ui.clearMessage();
-            this.created.emit();
-            this.close.emit();
-          }, 1500);
-        });
-      }, error: (err) => {
-          this.ui.stopLoading().then(()=>{
-            this.ui.showError('Erreur lors de la création');
-            this.close.emit();
-          });
+    forkJoin([this.commentService.create(payload),timer(1500)]).subscribe({
+      next : ()=>{
+        this.ui.stopLoading();
+        this.ui.showSuccess('Commentaire posté!');
+
+        this.created.emit();
+        this.close.emit();
+      }, error: (err) =>{
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Erreur lors de la création');
+        this.close.emit();
       }
     });
-
-
   }
 
   handleClose(): void {

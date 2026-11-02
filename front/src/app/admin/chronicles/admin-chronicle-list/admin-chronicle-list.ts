@@ -5,6 +5,7 @@ import { AdminChronicleCard } from '../admin-chronicle-card/admin-chronicle-card
 import { Router } from '@angular/router';
 import { UiStore } from '../../../core/stores/ui.store';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
+import { forkJoin, timer } from 'rxjs';
 
 @Component({
   selector: 'app-admin-chronicle-list',
@@ -30,21 +31,16 @@ export class AdminChronicleList {
 
   deleteChronicle(id: number){
     this.ui.startLoading();
-    this.adminChronicleService.delete(id).subscribe({
-      next: () => {
-        this.ui.stopLoading().then(()=>{
-          this.chronicles.update((currentChronicles) =>
-            currentChronicles.filter((chronicle)=> chronicle.id !== id)
-          );
-          this.ui.showSuccess("Suppression éffectuée !")
-        });
-
-      },
-      error: (err) => {
-        this.ui.stopLoading().then(() => {
-          console.error('Erreur lors de la suppression', err);
-          this.ui.showError('Erreur lors de la suppression.');
-        });
+    forkJoin([this.adminChronicleService.delete(id), timer(1500)]).subscribe({
+      next: ()=>{
+        this.ui.stopLoading();
+        this.chronicles.update((currentChronicles) =>
+          currentChronicles.filter((chronicle)=> chronicle.id !== id)
+        );
+        this.ui.showSuccess("Suppression éffectuée !")
+      }, error: (err) => {
+        this.ui.stopLoading();
+        this.ui.showError(err.error?.message ?? 'Erreur lors de la suppression');
       }
     });
   }

@@ -1,5 +1,7 @@
 import { Injectable, signal, computed } from "@angular/core";
 
+const MESSAGE_DURATION_MS = 3800;
+
 @Injectable({ providedIn:'root'})
 export class UiStore {
 
@@ -7,45 +9,45 @@ export class UiStore {
     successMessage = signal<string | null>(null);
     errorMessage = signal<string | null>(null);
 
-    private loadingStartedAt = 0;
-    private readonly minLoadingDuration = 1500;
+    private successTimer: ReturnType<typeof setTimeout> | null = null;
+    private errorTimer: ReturnType<typeof setTimeout> | null = null;
 
     hasMessage = computed(
         () => this.successMessage() !== null || this.errorMessage() !== null,
     );
 
-    startLoading(){
-        this.loadingStartedAt = Date.now();
+    startLoading(): void{
+        this.clearMessage();
         this.isLoading.set(true);
     }
 
-    stopLoading(): Promise<void> {
-        const elapsed = Date.now() - this.loadingStartedAt;
-        const remaining = Math.max(0, this.minLoadingDuration - elapsed);
-
-        return new Promise((resolve) => {
-            setTimeout(() => {
-            this.isLoading.set(false);
-            resolve();
-            }, remaining);
-        });
+    stopLoading(): void{
+        this.isLoading.set(false);
     }
 
-    showSuccess(message: string) {
+    showSuccess(message: string): void {
+        if (this.successTimer) clearTimeout(this.successTimer);
         this.successMessage.set(message);
-        setTimeout(() => {
-            this.successMessage.set(null);
-        }, 3800);
+        this.successTimer = setTimeout(() => {
+        this.successMessage.set(null);
+        this.successTimer = null;
+        }, MESSAGE_DURATION_MS);
     }
 
-    showError(message: string) {
+    showError(message: string): void {
+        if (this.errorTimer) clearTimeout(this.errorTimer);
         this.errorMessage.set(message);
-        setTimeout(() => {
-            this.errorMessage.set(null);
-        }, 3800);
+        this.errorTimer = setTimeout(() => {
+        this.errorMessage.set(null);
+        this.errorTimer = null;
+        }, MESSAGE_DURATION_MS);
     }
 
-    clearMessage(){
+    clearMessage(): void {
+        if (this.successTimer) clearTimeout(this.successTimer);
+        if (this.errorTimer) clearTimeout(this.errorTimer);
+        this.successTimer = null;
+        this.errorTimer = null;
         this.successMessage.set(null);
         this.errorMessage.set(null);
     }
