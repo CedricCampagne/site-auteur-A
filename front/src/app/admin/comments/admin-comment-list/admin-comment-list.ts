@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { AdminCommentService } from '../service/admin-comment.service';
 import { AdminCommentResponse } from '../models/adminCommentResponse';
 import { UiStore } from '../../../core/stores/ui.store';
@@ -21,6 +21,17 @@ export class AdminCommentList {
   ui = inject(UiStore);
 
   comments = signal<AdminCommentResponse[]>([]);
+
+  selectedChronicle = signal('');
+  selectedUser = signal('');
+
+  chroniclesTitles = computed(()=> [
+    ...new Set(this.comments().map(comment => comment.chronicleTitle))
+  ]);
+
+  commentUsers = computed(()=> [
+    ... new Set(this.comments().map(comment => comment.username))
+  ]);
 
   ngOnInit(): void {
     this.adminCommentService.getAll().subscribe({
@@ -64,4 +75,25 @@ export class AdminCommentList {
   updateComment(id: number){
     this.router.navigate(["admin/comments", id]);
   }
+
+  resetFilter() {
+    this.selectedChronicle.set('');
+    this.selectedUser.set('');
+  }
+
+  filteredComments = computed(() => {
+  const chronicle = this.selectedChronicle();
+  const user = this.selectedUser();
+
+  return this.comments().filter(comment => {
+    const matchChronicle =
+      !chronicle || comment.chronicleTitle === chronicle;
+
+    const matchUser =
+      !user || comment.username === user;
+
+    return matchChronicle && matchUser;
+  });
+});
+
 }
