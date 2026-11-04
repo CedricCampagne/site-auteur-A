@@ -5,10 +5,11 @@ import { CommentCreateRequest } from '../models/commentCreateRequest';
 import { UiStore } from '../../core/stores/ui.store';
 import { UiMessages } from '../../shared/ui/ui-messages/ui-messages';
 import { forkJoin, timer } from 'rxjs';
+import { UiButton } from '../../shared/ui/ui-button/ui-button';
 
 @Component({
   selector: 'app-comment-create-modal',
-  imports: [FormsModule],
+  imports: [FormsModule, UiButton],
   templateUrl: './comment-create-modal.html',
   styleUrl: './comment-create-modal.css',
 })

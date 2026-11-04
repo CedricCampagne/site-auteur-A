@@ -21,7 +21,8 @@ public class ChronicleMapper {
                 chronicle.getTitle(),
                 chronicle.getQuote(),
                 chronicle.getSummary(),
-                chronicle.getCoverUrl()
+                chronicle.getCoverUrl(),
+                chronicle.getSlug()
         );
     }
 

@@ -30,12 +30,11 @@
     </div>
 
     <!-- Bouton -->
-    <button
-      type="button"
-      class="mt-4 border-2 border-accent2 hover:bg-accent2 hover:text-white transition-all duration-300 w-fit self-center sm:self-auto"
-      (click)="goToChronicle()"
-    >
-      Lire la chronique
-    </button>
+    <app-ui-button 
+      label="Lire la chronique"
+      variant="outline"
+      color="accent2"
+      (clicked)="goToChronicle()"
+    />
   </div>
 </article>

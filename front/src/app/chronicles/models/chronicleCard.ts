@@ -4,4 +4,5 @@ export interface ChronicleCard {
     quote: string;
     summary: string;
     coverUrl: string;
+    slug: string;
 }   

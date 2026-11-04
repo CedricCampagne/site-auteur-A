@@ -13,7 +13,6 @@ import { BookHomeCard } from '../shared/ui/book-home-card/book-home-card';
 import { ChronicleService } from '../chronicles/services/chronicle.service';
 import { ChronicleHomeCard } from '../shared/ui/chronicle-home-card/chronicle-home-card';
 import { About } from './about/about';
-import { UiMessages } from '../shared/ui/ui-messages/ui-messages';
 
 @Component({
   selector: 'app-home',

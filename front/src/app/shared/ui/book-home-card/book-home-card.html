@@ -16,15 +16,20 @@
       </h2>
     
       <p class="text-center text-sm">
-        {{ book.publishedAt }}
+        {{ book.publishedAt | date: 'dd/MM/yyyy' }}
       </p>
     
-      <button
+      <app-ui-button
+        label="Voir le livre"
+        variant="outline"
+        (clicked)="goToBook()"
+      />
+      <!-- <button
         type="button"
         class="border-2 text-accent1 border-accent1 hover:text-white hover:bg-accent1 transition-all duration-500"
         (click)="goToBook()"
       >
         Voir le livre
-      </button>
+      </button> -->
     </article>
 }

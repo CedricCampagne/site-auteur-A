@@ -5,6 +5,7 @@ public record ChronicleCard(
         String title,
         String quote,
         String summary,
-        String coverUrl
+        String coverUrl,
+        String slug
 ) {
 }

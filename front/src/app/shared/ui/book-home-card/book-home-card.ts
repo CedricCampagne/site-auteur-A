@@ -1,10 +1,12 @@
 import { Component, input, inject } from '@angular/core';
 import { BookCard } from '../../../books/models/bookCard';
 import { Router } from '@angular/router';
+import { UiButton } from '../ui-button/ui-button';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-home-card',
-  imports: [],
+  imports: [UiButton, DatePipe],
   templateUrl: './book-home-card.html',
   styleUrl: './book-home-card.css',
 })

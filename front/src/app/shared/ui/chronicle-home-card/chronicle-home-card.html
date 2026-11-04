@@ -14,10 +14,10 @@
   <div
     class="basis-2/3 flex flex-col items-center justify-between p-4 overflow-hidden"
   >
-    <h3 class="font-title text-lg line-clamp-2">
+    <h3 class="font-title text-lg text-center line-clamp-2">
       {{ chronicle().title }}
     </h3>
-
+  
     <p class="text-accent1 line-clamp-2 text-center">
       {{ chronicle().quote }}
     </p>
@@ -26,11 +26,17 @@
       {{ chronicle().summary }}
     </p>
 
-    <button
+    <app-ui-button
+      label="Lire la chronique"
+      variant="outline"
+      color="accent2"
+      (clicked)="goToChronicle()"
+    />
+    <!-- <button
       type="button"
       class="text-sm border-2 bg-white text-accent2 hover:bg-accent2 hover:text-white transition-all duration-500"
     >
       Lire la chronique
-    </button>
+    </button> -->
   </div>
 </article>

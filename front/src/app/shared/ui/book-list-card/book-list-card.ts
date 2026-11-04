@@ -1,9 +1,10 @@
 import { Component, inject, input } from '@angular/core';
 import { BookListItem } from '../../../books/models/bookListItem';
 import { Router } from '@angular/router';
+import { UiButton } from '../ui-button/ui-button';
 @Component({
   selector: 'app-book-list-card',
-  imports: [],
+  imports: [UiButton],
   templateUrl: './book-list-card.html',
   styleUrl: './book-list-card.css',
 })
