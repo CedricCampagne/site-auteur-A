@@ -37,24 +37,18 @@
           <p class="text-red-500 text-sm">{{ error() }}</p>
         }
       </div>
-      
-      <!-- <app-ui-messages /> -->
 
       <div class="flex gap-2">
-        <button
+        <app-ui-button
+          label="Valider"
           type="submit"
-          class="bg-accent1 text-white p-2 rounded-xs"
-        >
-          Valider
-        </button>
+        />
 
-        <button
-          type="button"
-          class="bg-accent2 text-white p-2 rounded-xs"
-          (click)="handleClose()"
-        >
-          Annuler
-        </button>
+        <app-ui-button
+          label="Annuler"
+          color="accent2"
+          (clicked)="handleClose()"
+        />
       </div>
     </form>
   </div>

@@ -30,14 +30,11 @@
           </p>
 
           <div class="flex flex-col items-center gap-4">
-            <button
-              type="button"
-              class="border hover:text-accent2 hover:bg-white transition-all duration-500"
-              (click)="goToAbout()"
-            >
-              En savoir plus
-            </button>
-
+            <app-ui-button
+              label="En savoir plus"
+              color="accent2"
+              (clicked)="goToAbout()"
+            />
             <a
               href="https://www.instagram.com/katiacampagne/"
               target="_blank"

@@ -2,10 +2,11 @@ import { Component, inject, input, output} from '@angular/core';
 import { BookLatest } from '../../books/models/BookLatest';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { UiButton } from '../../shared/ui/ui-button/ui-button';
 
 @Component({
   selector: 'app-last-book',
-  imports: [DatePipe],
+  imports: [DatePipe, UiButton],
   templateUrl: './last-book.html',
   styleUrl: './last-book.css',
 })

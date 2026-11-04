@@ -28,12 +28,11 @@
       </p>
     </div>
 
-    <button
-      type="button"
-      class="mt-4 border-2 text-accent1 border-accent1 hover:bg-accent1 hover:text-white transition-all duration-300 w-fit"
-      (click)="goToBook()"
-    >
-      Voir le livre
-    </button>
+    <app-ui-button
+      label="Voir le livre"
+      variant="outline"
+      (clicked)="goToBook()"
+    />
+ 
   </div>
 </section>

@@ -7,11 +7,12 @@ import { DatePipe } from '@angular/common';
 import { CommentCard } from '../../shared/ui/comment-card/comment-card';
 import { CommentCreateModal } from '../../comments/comment-create-modal/comment-create-modal';
 import { MarkdownPipe } from '../../shared/pipe/markdown.pipe';
+import { UiButton } from '../../shared/ui/ui-button/ui-button';
 
 @Component({
   selector: 'app-chronicle-details',
   standalone: true,
-  imports: [DatePipe, CommentCard, CommentCreateModal,MarkdownPipe ],
+  imports: [DatePipe, CommentCard, CommentCreateModal, MarkdownPipe, UiButton],
   templateUrl: './chronicle-details.html',
   styleUrl: './chronicle-details.css',
 })

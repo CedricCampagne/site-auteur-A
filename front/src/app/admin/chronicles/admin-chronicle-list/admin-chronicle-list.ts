@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { UiStore } from '../../../core/stores/ui.store';
 import { UiMessages } from '../../../shared/ui/ui-messages/ui-messages';
 import { forkJoin, timer } from 'rxjs';
+import { UiButton } from '../../../shared/ui/ui-button/ui-button';
 
 @Component({
   selector: 'app-admin-chronicle-list',
-  imports: [AdminChronicleCard, UiMessages],
+  imports: [AdminChronicleCard, UiMessages, UiButton],
   templateUrl: './admin-chronicle-list.html',
   styleUrl: './admin-chronicle-list.css',
 })
