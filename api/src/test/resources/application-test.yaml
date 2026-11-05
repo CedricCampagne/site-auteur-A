@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:siteauteur_test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  flyway:
+    enabled: false
+
+  security:
+    jwt:
+      secret-key: MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=
+      expiration: 86400000
+
+app:
+  cookie:
+    secure: false
+    same-site: Lax

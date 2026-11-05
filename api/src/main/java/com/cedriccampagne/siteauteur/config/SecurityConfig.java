@@ -42,7 +42,11 @@ public class SecurityConfig {
                     CorsConfiguration config = new CorsConfiguration();
 
                     config.setAllowedOriginPatterns(
-                            List.of("http://localhost:4200", "http://localhost")
+                            List.of(
+                                    "http://localhost:4200",
+                                    "http://localhost",
+                                    "https://site-auteur-a.vercel.app"
+                            )
                     );
                     config.setAllowedMethods(
                             List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")

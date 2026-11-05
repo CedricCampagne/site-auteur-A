@@ -14,6 +14,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
 
@@ -21,6 +22,12 @@ import java.time.Duration;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
+
+    @Value("${app.cookie.secure}")
+    private boolean cookieSecure;
+
+    @Value("${app.cookie.same-site}")
+    private String cookieSameSite;
 
     private final AuthService authService;
 
@@ -42,6 +49,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from("access_token", result.token())
                 .httpOnly(true)
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(Duration.ofMillis(jwtExpiration))
                 .build();
@@ -59,6 +68,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from("access_token", "")
                 .httpOnly(true)
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(0)
                 .build();
