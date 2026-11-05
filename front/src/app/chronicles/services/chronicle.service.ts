@@ -5,13 +5,13 @@ import { ChronicleListItem } from "../models/chronicleListItem";
 import { ChronicleDetails } from "../models/chronicleDetails";
 import { CommentListItem } from "../../comments/models/commentListItem";
 
-
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn:'root'})
 export class ChronicleService {
 
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:8080/api/chronicles';
+    private apiUrl = `${environment.apiUrl}/chronicles`;
 
     getHomeChronicles(){
         return this.http.get<ChronicleCard[]>(`${this.apiUrl}/latest`)

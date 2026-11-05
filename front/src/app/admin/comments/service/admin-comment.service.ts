@@ -4,14 +4,13 @@ import { Observable } from "rxjs";
 import { AdminCommentResponse } from "../models/adminCommentResponse";
 import { AdminCommentUpdateRequest } from "../models/adminCommentUpdateRequest";
 
-
-
+import { environment } from "../../../../environments/environment";
 
 @Injectable({providedIn:'root'})
 export class AdminCommentService {
 
     private http = inject(HttpClient);
-    private apiUrl = "http://localhost:8080/api/admin/comments"
+    private apiUrl = `${environment.apiUrl}/admin/comments`;
 
     getAll(): Observable<AdminCommentResponse[]>{
         return this.http.get<AdminCommentResponse[]>(`${this.apiUrl}`);

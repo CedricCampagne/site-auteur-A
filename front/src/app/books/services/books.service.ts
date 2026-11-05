@@ -5,11 +5,12 @@ import { HomeBooksResponse } from "../models/HomeBooksResponse";
 import { BookListItem } from "../models/bookListItem";
 import { BookDetails } from "../models/bookDetails";
 
+import { environment } from "../../../environments/environment";
 @Injectable({providedIn:'root'})
 export class BookService {
 
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:8080/api/books';
+    private apiUrl = `${environment.apiUrl}/books`;
 
     getActiveExcerpts(){
         return this.http.get<BookExcerpt[]>(`${this.apiUrl}/excerpts`);

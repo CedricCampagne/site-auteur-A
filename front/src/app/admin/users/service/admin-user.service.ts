@@ -4,11 +4,13 @@ import { Observable } from "rxjs";
 import { AdminUserResponse } from "../models/adminUserResponse";
 import { AdminUserUpdateRequest } from "../models/adminUserUpdateRequest";
 
+import { environment } from "../../../../environments/environment";
+
 @Injectable({providedIn:'root'})
 export class AdminUserService {
 
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:8080/api/admin/user';
+    private apiUrl = `${environment.apiUrl}/admin/user`;
 
     getAll(): Observable<AdminUserResponse[]>{
         return this.http.get<AdminUserResponse[]>(`${this.apiUrl}`);
