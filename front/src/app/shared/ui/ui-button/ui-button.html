@@ -1,0 +1,30 @@
+<button
+  [type]="type()"
+  [disabled]="disabled()"
+  (click)="clicked.emit()"
+  class="border-2 px-4 py-2 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+
+  [class.bg-accent1]="variant() === 'filled' && color() === 'accent1'"
+  [class.bg-accent2]="variant() === 'filled' && color() === 'accent2'"
+  [class.text-white]="variant() === 'filled'"
+
+  [class.border-white]="variant() === 'filled'"
+  [class.border-accent1]="variant() === 'outline' && color() === 'accent1'"
+  [class.border-accent2]="variant() === 'outline' && color() === 'accent2'"
+
+  [class.text-accent1]="variant() === 'outline' && color() === 'accent1'"
+  [class.text-accent2]="variant() === 'outline' && color() === 'accent2'"
+
+  [class.hover:bg-white]="variant() === 'filled'"
+  [class.hover:text-accent1]="color() === 'accent1'"
+  [class.hover:text-accent2]="color() === 'accent2'"
+
+  [class.hover:bg-accent1]="variant() === 'outline' && color() === 'accent1'"
+  [class.hover:bg-accent2]="variant() === 'outline' && color() === 'accent2'"
+  [class.hover:text-white]="variant() === 'outline'"
+
+  [class.text-sm]="size() === 'sm'"
+  [class.text-base]="size() === 'md'"
+>
+  {{ label() }}
+</button>

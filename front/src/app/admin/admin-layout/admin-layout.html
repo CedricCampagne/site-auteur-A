@@ -1,0 +1,53 @@
+
+<section class="flex flex-col gap-6 mt-24 pb-8 border-b">
+  <div class="border-b-2 border-accent2">
+    <h2 class="text-3xl sm:text-4xl font-black text-center mb-4">
+      Administration du site
+    </h2>
+  </div>
+
+  <!-- Menu nav -->
+  <nav class="bg-gray-100 border-b">
+    <ul
+      class="flex flex-col gap-4 items-center sm:flex-row sm:justify-center sm:gap-16 py-4 text-lg font-medium"
+    >
+      <li>
+        <a
+          routerLink="/admin/chroniclesList"
+          routerLinkActive="text-accent1 font-bold"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="px-4 py-2 hover:text-accent1 hover:underline underline-offset-4"
+        >
+          Chroniques
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/admin/commentsList"
+          routerLinkActive="text-accent1 font-bold"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="px-4 py-2 hover:text-accent1 hover:underline underline-offset-4"
+        >
+          Commentaires
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/admin/userList"
+          routerLinkActive="text-accent1 font-bold"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="px-4 py-2 hover:text-accent1 hover:underline underline-offset-4"
+        >
+          Utilisateurs
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Contenu dynamique des routes enfants -->
+  <main class="flex-1 p-6">
+    <router-outlet />
+  </main>
+</section>

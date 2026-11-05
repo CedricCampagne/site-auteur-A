@@ -1,0 +1,122 @@
+<section class="flex flex-col gap-4 mt-24 pb-8 border-b">
+  <h2 class="text-5xl font-black text-center mb-10">
+    Modifier un commentaire
+  </h2>
+
+  @if (comment(); as currentComment) {
+    <form
+      [formGroup]="updateForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-6 items-center"
+    >
+      <!-- Auteur -->
+      <div class="flex flex-col min-w-1/2">
+        <label for="username" class="font-title text-title mb-1">
+          Auteur :
+        </label>
+
+        <input
+          type="text"
+          id="username"
+          [value]="currentComment.username"
+          disabled
+          class="border rounded-md p-3 bg-gray-100"
+        >
+      </div>
+
+      <!-- Chronique -->
+      <div class="flex flex-col min-w-1/2">
+        <label for="chronicleTitle" class="font-title text-title mb-1">
+          Chronique :
+        </label>
+
+        <input
+          type="text"
+          id="chronicleTitle"
+          [value]="currentComment.chronicleTitle"
+          disabled
+          class="border rounded-md p-3 bg-gray-100"
+        >
+      </div>
+
+      <!-- Contenu -->
+      <div class="flex flex-col min-w-1/2 relative">
+        <label for="content" class="font-title text-title mb-1">
+          Commentaire :
+        </label>
+
+        <textarea
+          id="content"
+          formControlName="content"
+          rows="4"
+          class="border rounded-md p-3 focus:outline-none"
+          [class.border-accent1]="
+            updateForm.controls.content.touched &&
+            updateForm.controls.content.invalid
+          "
+          [class.border-accent2]="
+            !updateForm.controls.content.touched ||
+            updateForm.controls.content.valid
+          "
+        ></textarea>
+
+        @if (
+          updateForm.controls.content.touched &&
+          updateForm.controls.content.hasError('required')
+        ) {
+          <p class="text-sm text-accent1">
+            Le commentaire est obligatoire.
+          </p>
+        }
+
+        @if (
+          updateForm.controls.content.touched &&
+          updateForm.controls.content.hasError('minlength')
+        ) {
+          <p class="text-sm text-accent1">
+            Le commentaire doit contenir au moins 5 caractères.
+          </p>
+        }
+      </div>
+
+      <!-- Visibilité -->
+      <div class="flex min-w-1/2 items-center gap-3">
+        <input
+          type="checkbox"
+          id="isVisible"
+          formControlName="isVisible"
+          class="h-5 w-5 accent-accent2"
+        >
+
+        <label for="isVisible" class="font-title text-title">
+          Commentaire visible
+        </label>
+      </div>
+
+      <!-- Bouton -->
+      <button
+        type="submit"
+        class="text-white p-2 rounded-md min-w-1/4 transition-all duration-500"
+        [class.bg-accent1]="updateForm.invalid"
+        [class.bg-accent2]="updateForm.valid"
+        [disabled]="updateForm.invalid || !hasChanges || ui.isLoading()"
+      >
+        @if (ui.isLoading()) {
+            Mise à jour en cours...
+        } @else if (updateForm.invalid) {
+            Formulaire incomplet
+        } @else if (!hasChanges) {
+            Aucune modification
+        } @else {
+            Mettre à jour le commentaire
+        }
+      </button>
+    </form>
+  } @else {
+    <p class="text-center text-gray-500">
+      Chargement du commentaire...
+    </p>
+  }
+
+  <app-ui-messages />
+</section>

@@ -1,0 +1,50 @@
+<app-hero-section 
+    (selectedBook)="handleHeroExcerpt($event)"
+/>
+@if (homeBooks(); as books) {
+  <app-last-book 
+  [book]="books.latestBook" 
+  (openExcerpt)="handleExcerpt($event)"
+  />
+}
+
+@if (selectedExcerpt(); as excerpt) {
+<app-book-excerpt-modal
+  [open]="isModalOpen()"
+  [title]="excerpt.title"
+  [text]="excerpt.excerpt"
+  (close)="closeModal()"
+/>
+}
+
+@if (homeBooks(); as books) {
+  <section class="flex flex-col gap-4 mt-12 pb-8 border-b">
+    <h2 class="text-center md:text-start text-title text-2xl">
+      Bibliographie
+    </h2>
+
+    <div class="flex flex-col items-center gap-4 md:flex md:flex-row md:gap-4">
+      @for (book of books.otherBooks; track book.id) {
+        <app-book-home-card [book]="book" />
+      }
+    </div>
+  </section>
+}
+
+@if (homeChronicles(); as chronicles) {
+  <section class="flex flex-col gap-4 mt-12 pb-8 border-b">
+    <h2 class="text-center md:text-start text-title text-2xl">
+      Dernières chroniques
+    </h2>
+
+    <div class="flex flex-col items-center gap-4 md:flex md:flex-row">
+      @for (chronicle of chronicles; track chronicle.id) {
+        <app-chronicle-home-card [chronicle]="chronicle" />
+      }
+    </div>
+  </section>
+}
+
+<app-about />
+
+
