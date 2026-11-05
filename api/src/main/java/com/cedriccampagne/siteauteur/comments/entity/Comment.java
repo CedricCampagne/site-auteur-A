@@ -22,7 +22,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name ="is_visible", nullable = false)
@@ -35,10 +35,10 @@ public class Comment {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JoinColumn(name = "chronicle_id")
+    @JoinColumn(name = "chronicle_id", nullable = false)
     @ManyToOne
     private Chronicle chronicle;
 }

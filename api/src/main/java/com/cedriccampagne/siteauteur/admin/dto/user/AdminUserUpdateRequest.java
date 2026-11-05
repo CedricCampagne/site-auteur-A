@@ -13,7 +13,7 @@ public record AdminUserUpdateRequest(
 
         @Email
         @NotBlank
-        @Size(max = 50)
+        @Size(max = 255)
         String email,
 
         @NotNull

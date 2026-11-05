@@ -64,5 +64,6 @@ public class UserMapper {
     public void updateUserFromAdmin(AdminUserUpdateRequest request, User user){
         user.setUsername(request.username());
         user.setEmail(request.email());
+        user.setIsActive(request.isActive());
     }
 }

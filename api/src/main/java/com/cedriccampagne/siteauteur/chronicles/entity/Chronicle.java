@@ -29,13 +29,13 @@ public class Chronicle {
     @Column(nullable = false, unique = true, length = 255)
     private String slug;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String quote;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String summary;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "cover_url", nullable = false, length = 255)

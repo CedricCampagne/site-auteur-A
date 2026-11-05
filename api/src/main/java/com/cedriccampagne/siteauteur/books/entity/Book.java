@@ -29,10 +29,10 @@ public class Book {
     @Column(nullable = false, length = 255)
     private String author;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String summary;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String excerpt;
 
     @Column(name = "published_at",nullable = false)
@@ -41,7 +41,7 @@ public class Book {
     @Column
     private String publisher;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String genre;
 
     @Column(name = "cover_url", nullable = false, length = 255)
