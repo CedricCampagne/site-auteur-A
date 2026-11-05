@@ -7,10 +7,11 @@ import { RegisterRequest } from "../models/registerRequest";
 import { RegisterResponse } from "../models/registerResponse";
 import { CurrentUserResponse } from "../models/currentUserResponse";
 
+import { environment } from "../../../environments/environment";
 @Injectable({providedIn:'root'})
 export class AuthService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:8080/api/auth';
+    private apiUrl = `${environment.apiUrl}/auth`;
 
     login(request: LoginRequest): Observable<LoginResponse>{
         return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request);

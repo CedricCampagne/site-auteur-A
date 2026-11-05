@@ -6,12 +6,13 @@ import { AdminChronicleCreateRequest } from "../models/adminChronicleCreateReque
 import { AdminChronicleUpdateRequest } from "../models/adminChronicleUpdateRequest";
 import { AdminChronicleUpdateResponse } from "../models/adminChronivleUpdateResponse";
 
+import { environment } from "../../../../environments/environment";
 
 @Injectable({providedIn:'root'})
 export class AdminChronicleService {
 
     private http = inject(HttpClient);
-    private apiUrl = "http://localhost:8080/api/admin/chronicles"
+    private apiUrl = `${environment.apiUrl}/admin/chronicles`;
 
     getAll(): Observable<AdminChronicleResponse[]>{
         return this.http.get<AdminChronicleResponse[]>(`${this.apiUrl}`);
