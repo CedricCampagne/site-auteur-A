@@ -24,6 +24,10 @@ public class BookService {
     public HomeBooksResponse getActiveBooks() {
          List<Book> books = bookRepository.findAllByIsActiveTrueOrderByPublishedAtDesc();
 
+         if(books.isEmpty()){
+             return new HomeBooksResponse(null, List.of());
+         }
+
          Book latest = books.getFirst();
          BookLatest latestBook = bookMapper.toBookLatest(latest);
 

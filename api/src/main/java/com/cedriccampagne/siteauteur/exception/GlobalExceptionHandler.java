@@ -9,6 +9,7 @@ import com.cedriccampagne.siteauteur.comments.exception.CommentNotFoundException
 import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.exception.UserNotFoundException;
 import com.cedriccampagne.siteauteur.users.exception.UsernameAlreadyUsedException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -24,6 +25,20 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(
+            DataIntegrityViolationException exception
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                "Conflit avec des données existantes ou valeur non aceptée",
+                HttpStatus.CONFLICT.value(),
+                LocalDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleBookNotFound(BookNotFoundException exception){
@@ -97,7 +112,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
             MethodArgumentNotValidException exception
     ){
-        System.out.println(">>> HANDLER VALIDATION APPELÉ");
 
         Map<String, List<String>> errors = exception.getBindingResult()
                 .getFieldErrors()
