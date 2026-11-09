@@ -74,8 +74,8 @@
   <!-- Mobile -->
   <div class="flex md:hidden justify-between items-center">
     <button 
-        aria-label="Ouvrir le menu"
-        (click)="isOpen.update(value => !value)"
+      aria-label="Ouvrir le menu"
+      (click)="isOpen.update(value => !value)"
     >
       <iconify-icon
         [icon]="isOpen() ? 'ri:close-line' : 'ri:menu-line'"
@@ -99,6 +99,19 @@
       </a>
     </div>
     @if (isOpen()) {
+      
+          <!-- Fond qui ferme le menu au clic extérieur -->
+          <button
+            type="button"
+            class="fixed inset-0 z-40"
+            aria-label="Fermer le menu"
+            (click)="isOpen.set(false)"
+          ></button>
+
+          <nav class="absolute top-9 left-6 z-1000 md:hidden mt-2">
+            <!-- Ton menu actuel, sans modification -->
+          </nav>
+        
         <nav class="absolute top-9 left-6 z-1000 md:hidden mt-2">
             <ul class="flex flex-col gap-2 p-2 bg-white border rounded-tr-lg rounded-br-lg shadow">
             <li class="p-2 hover:text-accent1">
@@ -113,7 +126,7 @@
 
             <li class="p-2 hover:text-accent1">
                 <a
-                    routerLink="/bibliography"
+                    routerLink="/books"
                     routerLinkActive="text-accent1 font-black"
                 >
                 Livres
@@ -145,6 +158,9 @@
                 >
                 Contact
                 </a>
+            </li>
+            <li>
+              <app-account-menu />
             </li>
             </ul>
         </nav>
