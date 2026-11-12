@@ -55,7 +55,7 @@ public class ChronicleService {
 
     public ChronicleDetails getActiveById(Long id){
         Chronicle chronicle = chronicleRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(()-> new RuntimeException("erreur"));
+                .orElseThrow(()-> new ChronicleNotFoundException("Chronique introuvable"));
 
         return chronicleMapper.toChronicleDetails(chronicle);
     }

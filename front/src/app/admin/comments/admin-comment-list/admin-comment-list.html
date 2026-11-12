@@ -28,7 +28,7 @@
       >
         <option value="">Tous</option>
         @for (title of chroniclesTitles(); track title) {
-          <option [value]="title">{{ title }}</option>
+          <option [value]="title">{{ title | slice:0:15 }}{{ title.length > 15 ? '…' : '' }}</option>
         }
       </select>
     </div>

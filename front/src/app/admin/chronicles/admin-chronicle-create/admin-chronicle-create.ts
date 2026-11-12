@@ -75,7 +75,7 @@ export class AdminChronicleCreate {
       },
       error : (err) =>{
         this.ui.stopLoading();
-        this.ui.showError("Problème lors de la création !");
+        this.ui.showError(err.error?.message ?? "Problème lors de la création !");
       }
     });
 

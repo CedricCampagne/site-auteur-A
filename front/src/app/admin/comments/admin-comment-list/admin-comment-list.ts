@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { AdminCommentCard } from '../admin-comment-card/admin-comment-card';
 import 'iconify-icon';
 import { forkJoin, timer } from 'rxjs';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-admin-comment-list',
-  imports: [AdminCommentCard],
+  imports: [AdminCommentCard, SlicePipe],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './admin-comment-list.html',
   styleUrl: './admin-comment-list.css',
