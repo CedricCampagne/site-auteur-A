@@ -4,8 +4,10 @@ package com.cedriccampagne.siteauteur.users.service;
 import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserUpdateRequest;
 import com.cedriccampagne.siteauteur.admin.dto.user.AdminUserResponse;
 
+import com.cedriccampagne.siteauteur.roles.Role;
 import com.cedriccampagne.siteauteur.users.entity.User;
 
+import com.cedriccampagne.siteauteur.users.exception.AdminAccountProtectedException;
 import com.cedriccampagne.siteauteur.users.exception.UserNotFoundException;
 import com.cedriccampagne.siteauteur.users.mapper.UserMapper;
 import com.cedriccampagne.siteauteur.users.repository.UserRepository;
@@ -42,6 +44,10 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
+        if (user.getRole() == Role.ADMIN && !request.isActive()) {
+            throw new AdminAccountProtectedException("Impossible de désactiver un compte administrateur.");
+        }
+
         userMapper.updateUserFromAdmin(request, user);
 
         User saved = userRepository.save(user);
@@ -53,12 +59,20 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
+        if (user.getRole() == Role.ADMIN) {
+            throw new AdminAccountProtectedException("Impossible de supprimer un compte administrateur.");
+        }
+
         userRepository.delete(user);
     }
 
     public AdminUserResponse toggle(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+
+        if (user.getRole() == Role.ADMIN && user.getIsActive()) {
+            throw new AdminAccountProtectedException("Impossible de désactiver un compte administrateur.");
+        }
 
         user.setIsActive(!user.getIsActive());
 

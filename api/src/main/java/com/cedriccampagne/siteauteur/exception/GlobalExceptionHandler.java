@@ -6,6 +6,7 @@ import com.cedriccampagne.siteauteur.books.exception.BookNotFoundException;
 import com.cedriccampagne.siteauteur.chronicles.exception.ChronicleNotFoundException;
 import com.cedriccampagne.siteauteur.chronicles.exception.ChroniclePublicationException;
 import com.cedriccampagne.siteauteur.comments.exception.CommentNotFoundException;
+import com.cedriccampagne.siteauteur.users.exception.AdminAccountProtectedException;
 import com.cedriccampagne.siteauteur.users.exception.EmailAlreadyUsedException;
 import com.cedriccampagne.siteauteur.users.exception.UserNotFoundException;
 import com.cedriccampagne.siteauteur.users.exception.UsernameAlreadyUsedException;
@@ -165,6 +166,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ChroniclePublicationException.class)
     public ResponseEntity<ErrorResponse> handleChroniclePublicationException(
             ChroniclePublicationException exception
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                exception.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                LocalDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(AdminAccountProtectedException.class)
+    public ResponseEntity<ErrorResponse> handleAdminAccountProtectedException(
+            AdminAccountProtectedException exception
     ) {
         ErrorResponse error = new ErrorResponse(
                 exception.getMessage(),

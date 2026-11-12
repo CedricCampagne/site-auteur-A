@@ -70,8 +70,13 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers("/error").permitAll()
+
                         .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        .requestMatchers("/api/books/**").permitAll()
 
                         .requestMatchers("/api/chronicles/latest").permitAll()
                         .requestMatchers("/api/chronicles/list").permitAll()
@@ -83,7 +88,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/chronicles/*/comments").authenticated()
 
                         .requestMatchers("/api/comments/**").authenticated()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 );
 
         return http.build();
